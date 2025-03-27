@@ -1,0 +1,162 @@
+[gd_scene load_steps=6 format=3 uid="uid://n605q0bgvoyj"]
+
+[ext_resource type="Script" uid="uid://eutt3bpx167v" path="res://scene/team_maker_scene.gd" id="1_qc0iw"]
+[ext_resource type="PackedScene" uid="uid://bhnok6m5go6x5" path="res://components/create_player_popup.tscn" id="1_u1i5f"]
+[ext_resource type="Script" path="res://components/create_player_popup.gd" id="2_nosjr"]
+[ext_resource type="Script" path="res://components/player_list_container.gd" id="4_nosjr"]
+[ext_resource type="Script" path="res://scripts/team_data.gd" id="6_cj4bg"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_qc0iw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CreatePlayerPopup" type="PopupPanel" parent="CanvasLayer"]
+initial_position = 1
+size = Vector2i(720, 300)
+visible = true
+always_on_top = true
+script = ExtResource("2_nosjr")
+
+[node name="CreatePlayer" parent="CanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="TeamData" type="Node" parent="CanvasLayer"]
+script = ExtResource("6_cj4bg")
+
+[node name="UIGridContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 720.0
+offset_bottom = 1280.0
+
+[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ButtonRow1" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="CreatePlayerButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+action_mode = 0
+text = "Create Player"
+
+[node name="CreateTeamButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Create Team"
+
+[node name="ResetTeamsButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset Teams"
+
+[node name="HorizontalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="ButtonRow2" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="AutofillTeamsButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+action_mode = 0
+text = "Autofill Team Members"
+
+[node name="HorizontalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="MainRowLabels" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Players"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_font_sizes/font_size = 24
+text = "Teams"
+horizontal_alignment = 1
+
+[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="MainRow" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/MainRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="PlayerListScrollContainer" type="ScrollContainer" parent="CanvasLayer/UIGridContainer/MainRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="PlayerList" type="VBoxContainer" parent="CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+script = ExtResource("4_nosjr")
+
+[node name="TeamsListScrollContainer" type="ScrollContainer" parent="CanvasLayer/UIGridContainer/MainRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="TeamsList" type="VBoxContainer" parent="CanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/MainRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl3" type="Control" parent="CanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="BottomRow" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3

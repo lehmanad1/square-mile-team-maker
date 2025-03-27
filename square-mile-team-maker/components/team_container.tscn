@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf42q6ahyrobt"]
+
+[ext_resource type="Script" uid="uid://c6s75req21v0g" path="res://components/team_container.gd" id="1_0e1n8"]
+[ext_resource type="Script" uid="uid://cn2ckjwkb1cmi" path="res://components/team_member_slot.gd" id="2_d1de1"]
+
+[node name="TeamContainer" type="VBoxContainer"]
+offset_right = 420.0
+offset_bottom = 40.0
+script = ExtResource("1_0e1n8")
+
+[node name="TeamName" type="Label" parent="."]
+layout_mode = 2
+text = "Team"
+horizontal_alignment = 1
+
+[node name="TeamMembers" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="TeamMemberSlot" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot2" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot3" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot4" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot5" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot6" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot7" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")
+
+[node name="TeamMemberSlot8" type="PanelContainer" parent="TeamMembers"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_d1de1")

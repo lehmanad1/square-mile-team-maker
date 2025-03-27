@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://bhnok6m5go6x5"]
+
+[node name="PlayerEntry" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -399.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -345.0
+offset_top = -95.5
+offset_right = 345.0
+offset_bottom = 95.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Name "
+
+[node name="NameEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Name Here"
+
+[node name="HorizontalSpaceControl1" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Attr1Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Attribute 1"
+
+[node name="Attr1Edit" type="TextEdit" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "0"
+placeholder_text = "0"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Attr2Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Attribute 2"
+
+[node name="Attr2Edit" type="TextEdit" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+placeholder_text = "0"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Attr3Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Attribute 3"
+
+[node name="Attr3Edit" type="TextEdit" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+placeholder_text = "0"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Attr4Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "Attribute 4"
+
+[node name="Attr4Edit" type="TextEdit" parent="VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+placeholder_text = "0"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="SavePlayerButton" type="Button" parent="VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save Player"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer6/SavePlayerButton" to="." method="_on_save_player_button_pressed"]

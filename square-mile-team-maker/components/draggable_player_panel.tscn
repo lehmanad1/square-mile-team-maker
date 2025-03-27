@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://xxtbdk1aq518"]
+
+[ext_resource type="Script" uid="uid://bn8fyjaa2bskr" path="res://components/draggable_player_panel.gd" id="1_ow7lj"]
+
+[node name="PlayerPanelContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 40)
+offset_right = 200.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_ow7lj")
+
+[node name="PlayerName" type="Label" parent="."]
+layout_mode = 2
+text = "Player Name Here"
+horizontal_alignment = 1
+text_overrun_behavior = 3
