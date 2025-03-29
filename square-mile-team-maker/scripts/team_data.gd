@@ -19,6 +19,7 @@ func _ready():
 	# teamless_players_updated.emit()
 	
 func try_add_available_player(player: Player) -> bool:
+	print('test ', str(player.attr1))
 	if availablePlayers.map(func(x): return x.name).has(player.name):
 		return false
 	availablePlayers.append(player)

@@ -7,11 +7,11 @@ extends PopupPanel
 func _ready():
 	await create_player_button.ready
 	create_player_button.pressed.connect(Callable(self, "_on_create_player_button_pressed"))
-	create_player_modal.connect("player_saved", Callable(self, "_on_create_player_player_saved"))
+	create_player_modal.connect("close_popup", Callable(self, "_on_create_player_popup_closed"))
 
 func _on_create_player_button_pressed() -> void:
 	visible = true
 	name_input.grab_focus()
 
-func _on_create_player_player_saved(new_value: Player) -> void:
+func _on_create_player_popup_closed() -> void:
 	visible = false

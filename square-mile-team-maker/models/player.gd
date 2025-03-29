@@ -1,15 +1,15 @@
 class_name Player
-var name = ""
+var name:String = ""
 
-var attr1 = 0
-var attr2 = 0
-var attr3 = 0
-var attr4 = 0
+var attr1:int = 0
+var attr2:int = 0
+var attr3:int = 0
+var attr4:int = 0
 
 func _init(n="",a1=0,a2=0,a3=0,a4=0):
 	name = n
-	a1 = attr1
-	a2 = attr2
-	a3 = attr3
-	a4 = attr4
+	attr1 = a1
+	attr2 = a2
+	attr3 = a3
+	attr4 = a4
 	
