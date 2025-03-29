@@ -2,13 +2,18 @@ extends Node2D
 
 signal team_size_updated
 
-@onready var create_player_modal = $"CanvasLayer/CreatePlayerPopup/CreatePlayer"
-@onready var teamless_player_list = $CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
-@onready var teams_list = $CanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
-@onready var team_data = $CanvasLayer/TeamData
-@onready var create_team_button = $"CanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
-@onready var reset_teams_button = $"CanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
-@onready var autofill_teams_button = $"CanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
+# TeamCanvasLayer Nodes
+@onready var create_player_modal = $"TeamCanvasLayer/CreatePlayerPopup/CreatePlayer"
+@onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
+@onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
+@onready var team_data = $TeamData
+@onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
+@onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
+@onready var autofill_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
+
+# PlayerCanvasLayer Nodes
+@onready var create_saved_player_button = $PlayerCanvasLayer/UIGridContainer/ButtonRow1/CreatePlayerButton
+
 var PlayerPanelScene = preload("res://components/draggable_player_panel.tscn")
 var TeamScene = preload("res://components/team_container.tscn")
 
@@ -16,12 +21,17 @@ func _ready():
 	await get_tree().process_frame
 	if teamless_player_list == null:
 		teamless_player_list = $CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
-	# $CanvasLayer/CreateTeamButton.connect("pressed", Callable(self, "_create_team"))
+	
+	# TeamCanvas Connections
 	team_data.connect("teams_updated", Callable(self, "_redraw_teams"))
 	team_data.connect("teamless_players_updated", Callable(self, "_redraw_teamless_players"))
 	create_team_button.pressed.connect(Callable(self, "_add_new_team"))
 	reset_teams_button.pressed.connect(Callable(self, "_reset_teams"))
 	autofill_teams_button.pressed.connect(Callable(self, "_autofill_teams"))
+	teamless_player_list.connect("remove_player_from_team", Callable(self, "_remove_player_from_team"))
+	
+	# PlayerCanvas Connections
+	
 	_redraw_teamless_players()
 	_redraw_teams()
 
@@ -70,3 +80,6 @@ func _instantiate_team_container(team:Team) -> VBoxContainer:
 
 func _remove_team() ->  void:
 	pass;
+	
+func _remove_player_from_team(team_name: String, target_player: Player):
+	team_data.remove_player_from_team(team_name, target_player);

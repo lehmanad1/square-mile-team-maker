@@ -11,20 +11,19 @@ signal close_popup
 @onready var attr3_edit = $VBoxContainer/HBoxContainer4/Attr3Edit
 @onready var attr4_edit = $VBoxContainer/HBoxContainer5/Attr4Edit
 @onready var validation_label = $VBoxContainer/ValidationLabel
-@onready var team_data = $"../../TeamData"
+@onready var team_data = $"../../../TeamData"
 
 func _ready():
 	save_button.connect("pressed", Callable(self, "_on_save_player_button_pressed"));
-	var result = close_button.connect("pressed", Callable(self, "_close_button_pressed"));
+	close_button.connect("pressed", Callable(self, "_close_button_pressed"));
 	name_edit.connect("gui_input", Callable(self, "_on_text_gui_input"));
 	get_parent().connect("close_requested", Callable(self, "_clear_input"));
-	print(result)
 
 func _close_button_pressed() -> void:
 	emit_signal("close_popup")
 	
 
-func _on_save_player_button_pressed(close:bool = true) -> void:
+func _on_save_player_button_pressed(close:bool = false) -> void:
 	
 	if name_edit.text == "":
 		_show_validation_text("Please enter a name for this player")

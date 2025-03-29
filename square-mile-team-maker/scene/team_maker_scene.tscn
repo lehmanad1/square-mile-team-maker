@@ -10,20 +10,22 @@
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qc0iw")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="TeamData" type="Node" parent="."]
+script = ExtResource("6_cj4bg")
+
+[node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
-[node name="CreatePlayerPopup" type="PopupPanel" parent="CanvasLayer"]
+[node name="CreatePlayerPopup" type="PopupPanel" parent="TeamCanvasLayer"]
 transparent_bg = false
 initial_position = 1
 size = Vector2i(720, 500)
-visible = true
 transient_to_focused = true
 always_on_top = true
 transparent = false
 script = ExtResource("2_6gtjv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CreatePlayerPopup"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TeamCanvasLayer/CreatePlayerPopup"]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 716.0
@@ -31,28 +33,25 @@ offset_bottom = 496.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="Control" type="Control" parent="CanvasLayer/CreatePlayerPopup/VBoxContainer"]
+[node name="Control" type="Control" parent="TeamCanvasLayer/CreatePlayerPopup/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/CreatePlayerPopup/VBoxContainer"]
+[node name="Label" type="Label" parent="TeamCanvasLayer/CreatePlayerPopup/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
 text = "Edit Player"
 
-[node name="CreatePlayer" parent="CanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
+[node name="CreatePlayer" parent="TeamCanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 716.0
+offset_bottom = 496.0
 size_flags_horizontal = 3
 script = ExtResource("4_b48f2")
 
-[node name="TeamData" type="Node" parent="CanvasLayer"]
-script = ExtResource("6_cj4bg")
-
-[node name="UIGridContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="UIGridContainer" type="VBoxContainer" parent="TeamCanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -61,77 +60,77 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer"]
+[node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="ButtonRow1" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+[node name="ButtonRow1" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
 layout_mode = 2
 
-[node name="HorizontalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+[node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="CreatePlayerButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+[node name="CreatePlayerButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
 text = "Create Player"
 
-[node name="CreateTeamButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+[node name="CreateTeamButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Create Team"
 
-[node name="ResetTeamsButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+[node name="ResetTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Reset Teams"
 
-[node name="HorizontalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow1"]
+[node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer"]
+[node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="ButtonRow2" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+[node name="ButtonRow2" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
 layout_mode = 2
 
-[node name="HorizontalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+[node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="AutofillTeamsButton" type="Button" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+[node name="AutofillTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
 text = "Autofill Team Members"
 
-[node name="HorizontalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/ButtonRow2"]
+[node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="MainRowLabels" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+[node name="MainRowLabels" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
 layout_mode = 2
 
-[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+[node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/MainRowLabels"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+[node name="Label" type="Label" parent="TeamCanvasLayer/UIGridContainer/MainRowLabels"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Players"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+[node name="Label2" type="Label" parent="TeamCanvasLayer/UIGridContainer/MainRowLabels"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
@@ -139,25 +138,25 @@ theme_override_font_sizes/font_size = 24
 text = "Teams"
 horizontal_alignment = 1
 
-[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/MainRowLabels"]
+[node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/MainRowLabels"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="MainRow" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+[node name="MainRow" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VerticalSpaceControl1" type="Control" parent="CanvasLayer/UIGridContainer/MainRow"]
+[node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="PlayerListScrollContainer" type="ScrollContainer" parent="CanvasLayer/UIGridContainer/MainRow"]
+[node name="PlayerListScrollContainer" type="ScrollContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="PlayerList" type="VBoxContainer" parent="CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer"]
+[node name="PlayerList" type="VBoxContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -165,25 +164,207 @@ size_flags_vertical = 3
 theme_override_constants/separation = 1
 script = ExtResource("4_nosjr")
 
-[node name="TeamsListScrollContainer" type="ScrollContainer" parent="CanvasLayer/UIGridContainer/MainRow"]
+[node name="TeamsListScrollContainer" type="ScrollContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="TeamsList" type="VBoxContainer" parent="CanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer"]
+[node name="TeamsList" type="VBoxContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VerticalSpaceControl2" type="Control" parent="CanvasLayer/UIGridContainer/MainRow"]
+[node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="VerticalSpaceControl3" type="Control" parent="CanvasLayer/UIGridContainer"]
+[node name="VerticalSpaceControl3" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="BottomRow" type="HBoxContainer" parent="CanvasLayer/UIGridContainer"]
+[node name="BottomRow" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="PlayerCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+follow_viewport_enabled = true
+
+[node name="CreatePlayerPopup" type="PopupPanel" parent="PlayerCanvasLayer"]
+auto_translate_mode = 1
+transparent_bg = false
+initial_position = 1
+size = Vector2i(720, 500)
+transient_to_focused = true
+always_on_top = true
+transparent = false
+script = ExtResource("2_6gtjv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerCanvasLayer/CreatePlayerPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 716.0
+offset_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Control" type="Control" parent="PlayerCanvasLayer/CreatePlayerPopup/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerCanvasLayer/CreatePlayerPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Edit Player"
+
+[node name="CreatePlayer" parent="PlayerCanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 716.0
+offset_bottom = 496.0
+size_flags_horizontal = 3
+script = ExtResource("4_b48f2")
+
+[node name="UIGridContainer" type="VBoxContainer" parent="PlayerCanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VerticalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ButtonRow1" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="CreatePlayerButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+action_mode = 0
+text = "Create Saved Player"
+
+[node name="ImportPlayerListButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Import Saved Player List"
+
+[node name="ExportToClipboardButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Copy Saved To Clipboard"
+
+[node name="HorizontalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="ButtonRow2" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+action_mode = 0
+text = "Make this button do something
+"
+
+[node name="HorizontalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="MainRowLabels" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRowLabels"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerCanvasLayer/UIGridContainer/MainRowLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+theme_override_font_sizes/font_size = 24
+text = "Available Players"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PlayerCanvasLayer/UIGridContainer/MainRowLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_font_sizes/font_size = 24
+text = "Saved Players"
+horizontal_alignment = 1
+
+[node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRowLabels"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="MainRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VerticalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="PlayerListScrollContainer" type="ScrollContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="AvailablePlayerList" type="VBoxContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+script = ExtResource("4_nosjr")
+
+[node name="PlayerListScrollContainer2" type="ScrollContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="AvailablePlayerList" type="VBoxContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer2"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+script = ExtResource("4_nosjr")
+
+[node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl3" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="BottomRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
 layout_mode = 2

@@ -2,28 +2,32 @@ extends Node
 
 signal teamless_players_updated
 signal teams_updated
+signal saved_player_added
 
+var allSavedPlayers: Array[Player] = []
 var availablePlayers: Array[Player] = []
 var teamlessPlayers: Array[Player] = []
 var teams: Array[Team] = []
 var maxTeams = 6
 var teamSize = 8
 
-@onready var teamless_player_list = $"../UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList"
-
 func _ready():
 	await get_parent().ready
-	teamless_player_list.connect("remove_player_from_team", Callable(self, "remove_player_from_team"))
 	# for i in range(4):  # Loop 17 times
 	#	try_add_available_player(Player.new("Player " + str(i+1),0,0,0,0))
 	# teamless_players_updated.emit()
+
+func try_add_saved_player(player: Player) -> bool:
+	if allSavedPlayers.map(func(x): return x.name).has(player.name):
+		return false
+	allSavedPlayers.append(player)
+	saved_player_added.emit()
+	return true
 	
 func try_add_available_player(player: Player) -> bool:
-	print('test ', str(player.attr1))
-	if availablePlayers.map(func(x): return x.name).has(player.name):
-		return false
-	availablePlayers.append(player)
-	_recheck_teamless_player_list()
+	if try_add_saved_player(player):
+		availablePlayers.append(player)
+		_recheck_teamless_player_list()
 	return true
 
 func add_player_to_team(team_name: String, target_player: Player):
@@ -39,7 +43,11 @@ func remove_player_from_team(team_name: String, target_player: Player):
 				if player.name == target_player.name:
 					team.players.erase(player)
 					_emit_teams_update()
-					
+
+func removed_saved_player(player: Player) -> void:
+	# need to add functionality
+	pass;
+
 func autofill_players_to_teams():
 	if teams.is_empty():
 		return

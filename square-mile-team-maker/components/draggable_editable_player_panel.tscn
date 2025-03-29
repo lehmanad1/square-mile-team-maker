@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgwfs414tsm1p"]
+[gd_scene load_steps=2 format=3 uid="uid://xxtbdk1aq518"]
 
-[ext_resource type="Script" uid="uid://bn8fyjaa2bskr" path="res://components/draggable_player_panel.gd" id="1_y0kbv"]
+[ext_resource type="Script" uid="uid://bq5lxoclyd2ll" path="res://components/draggable_editable_player_panel.gd" id="1_ow7lj"]
 
 [node name="PlayerPanelContainer" type="PanelContainer"]
-custom_minimum_size = Vector2(200, 40)
+custom_minimum_size = Vector2(350, 40)
 offset_right = 200.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
-script = ExtResource("1_y0kbv")
+script = ExtResource("1_ow7lj")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -49,3 +49,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "0"
 horizontal_alignment = 1
+
+[node name="EditPlayerButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Edit"
+
+[node name="DeletePlayerButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Delete"
