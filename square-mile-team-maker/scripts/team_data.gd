@@ -25,30 +25,35 @@ func try_add_saved_player(player: Player) -> bool:
 	return true
 	
 func mark_player_as_available(player: Player) -> void:
-	if(_is_player_in_list(player, availablePlayers)):
-		return;
-	availablePlayers.append(player)
-	saved_players_updated.emit()
+	if(not _is_player_in_list(player, availablePlayers)):
+		availablePlayers.append(player);
+		saved_players_updated.emit();
+	if(not _is_player_in_list(player, teamlessPlayers)):
+		teamlessPlayers.append(player);		
+		teamless_players_updated.emit()
 	
 func mark_player_as_unavailable(player: Player) -> void:
-	if(_is_player_in_list(player, allSavedPlayers) and not _is_player_in_list(player, availablePlayers)):
-		return;
-	availablePlayers.erase(player);
-	saved_players_updated.emit()
+	if(_is_player_in_list(player, availablePlayers)):
+		availablePlayers.erase(player);
+	if(_is_player_in_list(player, teamlessPlayers)):
+		teamlessPlayers.erase(player);
+		teamless_players_updated.emit();
+	remove_player_from_team(player);
+	saved_players_updated.emit();
 
 func add_player_to_team(team_name: String, target_player: Player):
 	for team in teams:
 		if team.team_name == team_name:
 			team.players.append(target_player)
 			_emit_teams_update()
-			
-func remove_player_from_team(team_name: String, target_player: Player):
+
+func remove_player_from_team(target_player: Player):
 	for team in teams:
-		if team.team_name == team_name:
-			for player in team.players:
-				if player.name == target_player.name:
-					team.players.erase(player)
-					_emit_teams_update()
+		for player in team.players:
+			if player.name == target_player.name:
+				team.players.erase(player);
+				_emit_teams_update();
+				break;
 
 func removed_saved_player(player: Player) -> void:
 	# need to add functionality

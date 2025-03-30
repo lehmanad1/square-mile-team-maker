@@ -3,6 +3,7 @@ extends Node2D
 signal team_size_updated
 
 # TeamCanvasLayer Nodes
+@onready var team_canvas_layer = $TeamCanvasLayer
 @onready var create_player_modal = $"TeamCanvasLayer/CreatePlayerPopup/CreatePlayer"
 @onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 @onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
@@ -10,11 +11,14 @@ signal team_size_updated
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
 @onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
 @onready var autofill_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
+@onready var show_player_canvas_button = $TeamCanvasLayer/UIGridContainer/BottomRow/ShowPlayerCanvasButton
 
 # PlayerCanvasLayer Nodes
+@onready var player_canvas_layer = $PlayerCanvasLayer
 @onready var create_saved_player_button = $PlayerCanvasLayer/UIGridContainer/ButtonRow1/CreatePlayerButton
 @onready var available_players_list = $PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/AvailablePlayerList
 @onready var saved_players_list = $PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer2/SavedPlayerList
+@onready var show_team_canvas_button = $PlayerCanvasLayer/UIGridContainer/BottomRow/ShowTeamCanvasButton
 
 var PlayerPanelScene = preload("res://components/draggable_player_panel.tscn")
 var TeamScene = preload("res://components/team_container.tscn")
@@ -33,18 +37,25 @@ func _ready():
 	reset_teams_button.pressed.connect(Callable(self, "_reset_teams"))
 	autofill_teams_button.pressed.connect(Callable(self, "_autofill_teams"))
 	teamless_player_list.connect("remove_player_from_team", Callable(self, "_remove_player_from_team"))
+	show_player_canvas_button.connect("pressed", Callable(self, "_toggle_canvas_visibility"))
 	
 	# PlayerCanvas Connections
 	team_data.connect("saved_players_updated", Callable(self, "_redraw_player_lists"))
 	available_players_list.connect("mark_player_as_available", Callable(self, "_mark_player_as_available"))
 	saved_players_list.connect("mark_player_as_unavailable", Callable(self, "_mark_player_as_unavailable"))
+	show_team_canvas_button.connect("pressed", Callable(self, "_toggle_canvas_visibility"))
+
+#Shared View Methods
+func _toggle_canvas_visibility():
+	team_canvas_layer.visible = not team_canvas_layer.visible
+	player_canvas_layer.visible = not player_canvas_layer.visible
 	
-# Team View Methods
 func _instantiate_player_panel(player_data: Player, list:Control) -> void:
 	var panel = PlayerPanelScene.instantiate()
 	panel.set_player(player_data)
 	list.add_child(panel)
 
+# Team View Methods
 func _add_new_team():
 	team_data.add_new_team()
 
@@ -87,7 +98,7 @@ func _remove_team() ->  void:
 	pass;
 	
 func _remove_player_from_team(team_name: String, target_player: Player):
-	team_data.remove_player_from_team(team_name, target_player);
+	team_data.remove_player_from_team(target_player);
 	
 # Player View Methods
 func _mark_player_as_available(player_data: Player):
@@ -102,7 +113,6 @@ func _instantiate_editable_player_panel(player_data: Player):
 	saved_players_list.add_child(panel)
 
 func _redraw_player_lists():
-	print("party time")
 	_redraw_saved_players_dropdown();
 	_redraw_available_players_dropdown();
 	

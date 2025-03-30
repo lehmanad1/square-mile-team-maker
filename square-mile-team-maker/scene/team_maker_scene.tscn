@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://bmtakuq8hrx8s" path="res://components/create_player.gd" id="4_b48f2"]
 [ext_resource type="Script" uid="uid://g6b7i62w214j" path="res://components/player_list_container.gd" id="4_nosjr"]
 [ext_resource type="Script" uid="uid://comgeel857d3r" path="res://scripts/team_data.gd" id="6_cj4bg"]
-[ext_resource type="Script" uid="uid://ch1ly3jf3xxnn" path="res://scene/saved_player_list.gd" id="7_jwh2g"]
-[ext_resource type="Script" uid="uid://bd3m3t58a6eh5" path="res://scene/available_player_list.gd" id="7_lpwxn"]
+[ext_resource type="Script" uid="uid://ch1ly3jf3xxnn" path="res://components/saved_player_list.gd" id="7_jwh2g"]
+[ext_resource type="Script" uid="uid://bd3m3t58a6eh5" path="res://components/available_player_list.gd" id="7_lpwxn"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qc0iw")
@@ -16,7 +16,6 @@ script = ExtResource("1_qc0iw")
 script = ExtResource("6_cj4bg")
 
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 
 [node name="CreatePlayerPopup" type="PopupPanel" parent="TeamCanvasLayer"]
@@ -156,6 +155,7 @@ layout_mode = 2
 [node name="PlayerListScrollContainer" type="ScrollContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
@@ -170,7 +170,6 @@ script = ExtResource("4_nosjr")
 [node name="TeamsListScrollContainer" type="ScrollContainer" parent="TeamCanvasLayer/UIGridContainer/MainRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.5
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
@@ -183,14 +182,34 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
+[node name="BottomRow" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="ShowPlayerCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit Saved/Available Players"
+
+[node name="DisabledShowTeamsCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Edit Teams"
+
+[node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
 [node name="VerticalSpaceControl3" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="BottomRow" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
-layout_mode = 2
-
 [node name="PlayerCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="CreatePlayerPopup" type="PopupPanel" parent="PlayerCanvasLayer"]
@@ -365,6 +384,26 @@ custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="BottomRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="ShowPlayerCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Edit Saved/Available Players"
+
+[node name="ShowTeamCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit Teams"
+
+[node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
+custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="VerticalSpaceControl3" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
