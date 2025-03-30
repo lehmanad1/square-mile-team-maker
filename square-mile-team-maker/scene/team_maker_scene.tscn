@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://n605q0bgvoyj"]
+[gd_scene load_steps=9 format=3 uid="uid://n605q0bgvoyj"]
 
 [ext_resource type="Script" uid="uid://eutt3bpx167v" path="res://scene/team_maker_scene.gd" id="1_qc0iw"]
 [ext_resource type="PackedScene" uid="uid://bhnok6m5go6x5" path="res://components/create_player.tscn" id="1_u1i5f"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://bmtakuq8hrx8s" path="res://components/create_player.gd" id="4_b48f2"]
 [ext_resource type="Script" uid="uid://g6b7i62w214j" path="res://components/player_list_container.gd" id="4_nosjr"]
 [ext_resource type="Script" uid="uid://comgeel857d3r" path="res://scripts/team_data.gd" id="6_cj4bg"]
+[ext_resource type="Script" uid="uid://ch1ly3jf3xxnn" path="res://scene/saved_player_list.gd" id="7_jwh2g"]
+[ext_resource type="Script" uid="uid://bd3m3t58a6eh5" path="res://scene/available_player_list.gd" id="7_lpwxn"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qc0iw")
@@ -14,6 +16,7 @@ script = ExtResource("1_qc0iw")
 script = ExtResource("6_cj4bg")
 
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="CreatePlayerPopup" type="PopupPanel" parent="TeamCanvasLayer"]
@@ -188,7 +191,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="PlayerCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 
 [node name="CreatePlayerPopup" type="PopupPanel" parent="PlayerCanvasLayer"]
@@ -342,7 +344,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 1
-script = ExtResource("4_nosjr")
+script = ExtResource("7_lpwxn")
 
 [node name="PlayerListScrollContainer2" type="ScrollContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
 layout_mode = 2
@@ -350,21 +352,21 @@ size_flags_horizontal = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="AvailablePlayerList" type="VBoxContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer2"]
+[node name="SavedPlayerList" type="VBoxContainer" parent="PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer2"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 1
-script = ExtResource("4_nosjr")
+script = ExtResource("7_jwh2g")
 
 [node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRow"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="VerticalSpaceControl3" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
-custom_minimum_size = Vector2(0, 25)
+[node name="BottomRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
 layout_mode = 2
 
-[node name="BottomRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+[node name="VerticalSpaceControl3" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2

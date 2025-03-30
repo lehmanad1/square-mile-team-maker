@@ -2,7 +2,7 @@ extends Node
 
 signal teamless_players_updated
 signal teams_updated
-signal saved_player_added
+signal saved_players_updated
 
 var allSavedPlayers: Array[Player] = []
 var availablePlayers: Array[Player] = []
@@ -21,14 +21,20 @@ func try_add_saved_player(player: Player) -> bool:
 	if allSavedPlayers.map(func(x): return x.name).has(player.name):
 		return false
 	allSavedPlayers.append(player)
-	saved_player_added.emit()
+	saved_players_updated.emit()
 	return true
 	
-func try_add_available_player(player: Player) -> bool:
-	if try_add_saved_player(player):
-		availablePlayers.append(player)
-		_recheck_teamless_player_list()
-	return true
+func mark_player_as_available(player: Player) -> void:
+	if(_is_player_in_list(player, availablePlayers)):
+		return;
+	availablePlayers.append(player)
+	saved_players_updated.emit()
+	
+func mark_player_as_unavailable(player: Player) -> void:
+	if(_is_player_in_list(player, allSavedPlayers) and not _is_player_in_list(player, availablePlayers)):
+		return;
+	availablePlayers.erase(player);
+	saved_players_updated.emit()
 
 func add_player_to_team(team_name: String, target_player: Player):
 	for team in teams:
@@ -47,6 +53,9 @@ func remove_player_from_team(team_name: String, target_player: Player):
 func removed_saved_player(player: Player) -> void:
 	# need to add functionality
 	pass;
+
+func get_unavailable_players() -> Array[Player]:
+	return allSavedPlayers.filter(func(x): return not _is_player_in_list(x, availablePlayers));
 
 func autofill_players_to_teams():
 	if teams.is_empty():
@@ -98,7 +107,7 @@ func _is_player_on_any_team(player: Player):
 	return teams.any(func(x): return _is_player_on_team(player, x))
 
 func _recheck_teamless_player_list():
-	var new_teamlessPlayers = availablePlayers.filter(func(x): return not _is_player_on_any_team(x))
+	var new_teamlessPlayers = teamlessPlayers.filter(func(x): return not _is_player_on_any_team(x))
 	if new_teamlessPlayers.map(func(x): return x.name) == teamlessPlayers.map(func(x): return x.name):
 		return
 	else:

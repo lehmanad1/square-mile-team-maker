@@ -36,7 +36,7 @@ func _on_save_player_button_pressed(close:bool = false) -> void:
 		attr3_edit.value,
 		attr4_edit.value
 	)
-	if team_data.try_add_available_player(player_data):
+	if team_data.try_add_saved_player(player_data):
 		
 		emit_signal("player_saved", player_data)
 		_clear_input()

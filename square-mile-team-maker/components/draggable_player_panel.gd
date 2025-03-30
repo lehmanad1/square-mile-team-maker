@@ -1,7 +1,5 @@
 extends PanelContainer
 
-@export var player_name: String = ""
-
 var player: Player
 
 @onready var label = $HBoxContainer/PlayerName

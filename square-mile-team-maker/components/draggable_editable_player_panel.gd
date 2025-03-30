@@ -1,7 +1,5 @@
 extends PanelContainer
 
-@export var player_name: String = ""
-
 var player: Player
 
 @onready var label = $HBoxContainer/PlayerName
@@ -9,7 +7,7 @@ var player: Player
 @onready var attr2Label = $HBoxContainer/GridContainer/Attr2Label
 @onready var attr3Label = $HBoxContainer/GridContainer/Attr3Label
 @onready var attr4Label = $HBoxContainer/GridContainer/Attr4Label
-
+@onready var editPlayerButton = $HBoxContainer/EditPlayerButton
 var is_touch_dragging = false
 
 func _ready():

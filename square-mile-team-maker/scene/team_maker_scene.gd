@@ -13,9 +13,13 @@ signal team_size_updated
 
 # PlayerCanvasLayer Nodes
 @onready var create_saved_player_button = $PlayerCanvasLayer/UIGridContainer/ButtonRow1/CreatePlayerButton
+@onready var available_players_list = $PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/AvailablePlayerList
+@onready var saved_players_list = $PlayerCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer2/SavedPlayerList
 
 var PlayerPanelScene = preload("res://components/draggable_player_panel.tscn")
 var TeamScene = preload("res://components/team_container.tscn")
+
+var EditablePlayerPanelScene = preload("res://components/draggable_editable_player_panel.tscn")
 
 func _ready():
 	await get_tree().process_frame
@@ -31,14 +35,15 @@ func _ready():
 	teamless_player_list.connect("remove_player_from_team", Callable(self, "_remove_player_from_team"))
 	
 	# PlayerCanvas Connections
+	team_data.connect("saved_players_updated", Callable(self, "_redraw_player_lists"))
+	available_players_list.connect("mark_player_as_available", Callable(self, "_mark_player_as_available"))
+	saved_players_list.connect("mark_player_as_unavailable", Callable(self, "_mark_player_as_unavailable"))
 	
-	_redraw_teamless_players()
-	_redraw_teams()
-
-func _instantiate_player_panel(player_data: Player) -> void:
+# Team View Methods
+func _instantiate_player_panel(player_data: Player, list:Control) -> void:
 	var panel = PlayerPanelScene.instantiate()
 	panel.set_player(player_data)
-	teamless_player_list.add_child(panel)
+	list.add_child(panel)
 
 func _add_new_team():
 	team_data.add_new_team()
@@ -61,7 +66,7 @@ func _redraw_teamless_players():
 	for child in teamless_player_list.get_children():
 		child.queue_free()
 	for teamless_player in team_data.teamlessPlayers:
-		_instantiate_player_panel(teamless_player)
+		_instantiate_player_panel(teamless_player, teamless_player_list)
 
 func _redraw_teams():
 	for child in teams_list.get_children():
@@ -83,3 +88,34 @@ func _remove_team() ->  void:
 	
 func _remove_player_from_team(team_name: String, target_player: Player):
 	team_data.remove_player_from_team(team_name, target_player);
+	
+# Player View Methods
+func _mark_player_as_available(player_data: Player):
+	team_data.mark_player_as_available(player_data);
+	
+func _mark_player_as_unavailable(player_data: Player):
+	team_data.mark_player_as_unavailable(player_data);	
+
+func _instantiate_editable_player_panel(player_data: Player):
+	var panel = EditablePlayerPanelScene.instantiate()
+	panel.set_player(player_data)
+	saved_players_list.add_child(panel)
+
+func _redraw_player_lists():
+	print("party time")
+	_redraw_saved_players_dropdown();
+	_redraw_available_players_dropdown();
+	
+func _redraw_available_players_dropdown():
+	for child in available_players_list.get_children():
+		available_players_list.remove_child(child);
+	for player in team_data.availablePlayers:
+		print("avail ",player.name)
+		_instantiate_player_panel(player, available_players_list);
+		
+func _redraw_saved_players_dropdown():
+	for child in saved_players_list.get_children():
+		saved_players_list.remove_child(child);
+	for player in team_data.get_unavailable_players():
+		print("saved ",player.name)
+		_instantiate_editable_player_panel(player);
