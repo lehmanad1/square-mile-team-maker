@@ -1,6 +1,9 @@
 extends PanelContainer
 
+signal edit_player
+
 var player: Player
+var is_touch_dragging = false
 
 @onready var label = $HBoxContainer/PlayerName
 @onready var attr1Label = $HBoxContainer/GridContainer/Attr1Label
@@ -8,10 +11,10 @@ var player: Player
 @onready var attr3Label = $HBoxContainer/GridContainer/Attr3Label
 @onready var attr4Label = $HBoxContainer/GridContainer/Attr4Label
 @onready var editPlayerButton = $HBoxContainer/EditPlayerButton
-var is_touch_dragging = false
 
 func _ready():
 	await get_tree().process_frame
+	editPlayerButton.pressed.connect(Callable(self, "_set_player_to_edit"))
 
 func set_player(new_player: Player):
 	player = new_player
@@ -65,3 +68,6 @@ func _drop_data(position, data):
 	var parent_container = get_parent()
 	if parent_container and parent_container.has_method("_drop_data"):
 		parent_container._drop_data(position, data)
+		
+func _set_player_to_edit():
+	edit_player.emit(player)

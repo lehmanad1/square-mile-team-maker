@@ -11,7 +11,9 @@ func _ready():
 
 func _on_create_player_button_pressed() -> void:
 	visible = true
-	name_input.grab_focus()
 
 func _on_create_player_popup_closed() -> void:
 	visible = false
+
+func _on_edit_player_button_pressed(player_data: Player) -> void:
+	visible = true

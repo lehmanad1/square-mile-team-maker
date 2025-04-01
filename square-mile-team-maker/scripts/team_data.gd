@@ -13,15 +13,42 @@ var teamSize = 8
 
 func _ready():
 	await get_parent().ready
-	# for i in range(4):  # Loop 17 times
-	#	try_add_available_player(Player.new("Player " + str(i+1),0,0,0,0))
-	# teamless_players_updated.emit()
 
-func try_add_saved_player(player: Player) -> bool:
-	if allSavedPlayers.map(func(x): return x.name).has(player.name):
-		return false
-	allSavedPlayers.append(player)
-	saved_players_updated.emit()
+func import_saved_player_data(saved_players_string: String):
+	var imported_players = Array(saved_players_string.split("\n")).map(func(x):
+		if x == "":
+			return null
+		var player_string = x.split(",");
+		if player_string.size() < 5:
+			return Player.new(player_string[0],1,1,1,1);
+		else:
+			return Player.new(player_string[0],
+			_import_attribute_with_limits(player_string[1]),
+			_import_attribute_with_limits(player_string[2]),
+			_import_attribute_with_limits(player_string[3]),
+			_import_attribute_with_limits(player_string[4])
+		)
+	);
+	allSavedPlayers = [];
+	for player in imported_players.filter(func(x): return x != null):
+		try_add_saved_player(player);
+	
+func export_saved_player_data() -> String:
+	return "\n".join(PackedStringArray(allSavedPlayers.map(func(x): return x.export_as_string())));
+	
+func try_add_saved_player(player: Player, is_edit: bool = false, previous_name: String = "") -> bool:
+	if previous_name == "":
+		previous_name = player.name
+	for i in range(allSavedPlayers.size()):
+		if allSavedPlayers[i].name == previous_name:
+			if is_edit == false or (_is_player_in_list(player, allSavedPlayers) and player.name != previous_name):
+				return false;
+			else:
+				allSavedPlayers[i] = player;
+				saved_players_updated.emit();
+				return true;
+	allSavedPlayers.append(player);
+	saved_players_updated.emit();
 	return true
 	
 func mark_player_as_available(player: Player) -> void:
@@ -42,8 +69,11 @@ func mark_player_as_unavailable(player: Player) -> void:
 	saved_players_updated.emit();
 
 func add_player_to_team(team_name: String, target_player: Player):
+	remove_player_from_team(target_player);
 	for team in teams:
 		if team.team_name == team_name:
+			if _is_player_on_team(target_player, team):
+				return;
 			team.players.append(target_player)
 			_emit_teams_update()
 
@@ -51,6 +81,7 @@ func remove_player_from_team(target_player: Player):
 	for team in teams:
 		for player in team.players:
 			if player.name == target_player.name:
+				print("removing player: ", player.name);
 				team.players.erase(player);
 				_emit_teams_update();
 				break;
@@ -62,12 +93,13 @@ func removed_saved_player(player: Player) -> void:
 func get_unavailable_players() -> Array[Player]:
 	return allSavedPlayers.filter(func(x): return not _is_player_in_list(x, availablePlayers));
 
-func autofill_players_to_teams():
+func autofill_players_to_teams_randomly():
 	if teams.is_empty():
 		return
 	var players_to_assign: Array[Player] = teamlessPlayers.duplicate(true)
+	if players_to_assign.is_empty():
+		return
 	players_to_assign.shuffle()
-	print(players_to_assign.size())
 	for player in players_to_assign:
 		var team_to_add = _get_team_with_least_players()
 		if team_to_add != null:
@@ -76,6 +108,30 @@ func autofill_players_to_teams():
 			break
 	_emit_teams_update()
 
+func autofill_players_to_team_by_attributes():
+	if teams.is_empty():
+		return
+		
+	var players_to_assign: Array[Player] = teamlessPlayers.duplicate(true)
+	if players_to_assign.is_empty():
+		return
+
+	players_to_assign.sort_custom(func(a:Player,b:Player): return a.get_attribute_total() > b.get_attribute_total())
+	for player in players_to_assign:
+		var best_team_to_add: Team = null
+		var lowest_current_team_score = INF
+		for team in teams:
+			if team.players.size() >= teamSize:
+				continue
+			var current_team_total = team.get_attribute_total()
+			if current_team_total < lowest_current_team_score:
+				lowest_current_team_score = current_team_total
+				best_team_to_add = team
+		if best_team_to_add != null:
+			print("Assigning %s to %s (Current score: %f)" % [player.name, best_team_to_add.team_name, lowest_current_team_score])
+			best_team_to_add.players.append(player)	
+	_emit_teams_update()	
+	
 func add_new_team():
 	var totalTeamCount = teams.size() + 1
 	var team_name = "Team #" + str(totalTeamCount)
@@ -112,9 +168,15 @@ func _is_player_on_any_team(player: Player):
 	return teams.any(func(x): return _is_player_on_team(player, x))
 
 func _recheck_teamless_player_list():
-	var new_teamlessPlayers = teamlessPlayers.filter(func(x): return not _is_player_on_any_team(x))
-	if new_teamlessPlayers.map(func(x): return x.name) == teamlessPlayers.map(func(x): return x.name):
-		return
-	else:
-		teamlessPlayers = new_teamlessPlayers
-		teamless_players_updated.emit()
+	teamlessPlayers = availablePlayers.filter(func(x): return not _is_player_on_any_team(x));
+	teamless_players_updated.emit();
+
+func _import_attribute_with_limits(attribute: String) -> int:
+	var attribute_value: int = int(attribute);
+	if attribute_value <= 0:
+		return 1;
+	if attribute_value > 10:
+		return 10;
+	else: 
+		return attribute_value;
+	

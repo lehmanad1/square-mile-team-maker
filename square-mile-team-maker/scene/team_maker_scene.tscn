@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://n605q0bgvoyj"]
+[gd_scene load_steps=10 format=3 uid="uid://n605q0bgvoyj"]
 
 [ext_resource type="Script" uid="uid://eutt3bpx167v" path="res://scene/team_maker_scene.gd" id="1_qc0iw"]
 [ext_resource type="PackedScene" uid="uid://bhnok6m5go6x5" path="res://components/create_player.tscn" id="1_u1i5f"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bmtakuq8hrx8s" path="res://components/create_player.gd" id="4_b48f2"]
 [ext_resource type="Script" uid="uid://g6b7i62w214j" path="res://components/player_list_container.gd" id="4_nosjr"]
 [ext_resource type="Script" uid="uid://comgeel857d3r" path="res://scripts/team_data.gd" id="6_cj4bg"]
+[ext_resource type="Script" uid="uid://bm681r7esj1u0" path="res://scene/import_saved_players_popup.gd" id="7_hksrk"]
 [ext_resource type="Script" uid="uid://ch1ly3jf3xxnn" path="res://components/saved_player_list.gd" id="7_jwh2g"]
 [ext_resource type="Script" uid="uid://bd3m3t58a6eh5" path="res://components/available_player_list.gd" id="7_lpwxn"]
 
@@ -18,16 +19,17 @@ script = ExtResource("6_cj4bg")
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
-[node name="CreatePlayerPopup" type="PopupPanel" parent="TeamCanvasLayer"]
+[node name="EditTeamSettingsPopup" type="PopupPanel" parent="TeamCanvasLayer"]
+auto_translate_mode = 1
 transparent_bg = false
 initial_position = 1
 size = Vector2i(720, 500)
+visible = true
 transient_to_focused = true
 always_on_top = true
 transparent = false
-script = ExtResource("2_6gtjv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TeamCanvasLayer/CreatePlayerPopup"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup"]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 716.0
@@ -35,23 +37,112 @@ offset_bottom = 496.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="Control" type="Control" parent="TeamCanvasLayer/CreatePlayerPopup/VBoxContainer"]
+[node name="Control" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TeamCanvasLayer/CreatePlayerPopup/VBoxContainer"]
+[node name="Label" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
-text = "Edit Player"
+text = "Edit Team Settings"
 
-[node name="CreatePlayer" parent="TeamCanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 716.0
-offset_bottom = 496.0
+[node name="MarginContainer" type="MarginContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Max Number of Teams"
+
+[node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(36, 50)
+layout_mode = 2
+
+[node name="MaxTeamSpinBox" type="SpinBox" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Max Number of Players"
+
+[node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="MaxPlayersPerTeamSpinbox" type="SpinBox" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="VerticalSpaceControl3" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Skill Balance"
+
+[node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Random"
+
+[node name="HSlider" type="HSlider" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("4_b48f2")
+size_flags_vertical = 4
+tick_count = 10
+
+[node name="Label3" type="Label" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Match by skill"
+
+[node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="VerticalSpaceControl4" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveTeamChangesButton" type="Button" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save changes"
+
+[node name="CancelTeamChangesButton" type="Button" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="Control2" type="Control" parent="TeamCanvasLayer/EditTeamSettingsPopup/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
 
 [node name="UIGridContainer" type="VBoxContainer" parent="TeamCanvasLayer"]
 anchors_preset = 15
@@ -63,7 +154,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 
 [node name="ButtonRow1" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
@@ -78,7 +169,7 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
-text = "Create Player"
+text = "Edit Team Settings"
 
 [node name="CreateTeamButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 50)
@@ -112,7 +203,14 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
-text = "Autofill Team Members"
+text = "Autofill Teams Randomly"
+
+[node name="AutofillTeamsButton2" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+action_mode = 0
+text = "Autofill By Attributes"
 
 [node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(30, 50)
@@ -192,13 +290,13 @@ layout_mode = 2
 [node name="ShowPlayerCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Edit Saved/Available Players"
+text = "1. Edit Saved/Available Players"
 
 [node name="DisabledShowTeamsCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-text = "Edit Teams"
+text = "2. Edit Teams"
 
 [node name="VerticalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
 custom_minimum_size = Vector2(30, 50)
@@ -248,6 +346,65 @@ offset_bottom = 496.0
 size_flags_horizontal = 3
 script = ExtResource("4_b48f2")
 
+[node name="ImportSavedPlayersPopup" type="PopupPanel" parent="PlayerCanvasLayer"]
+auto_translate_mode = 1
+transparent_bg = false
+initial_position = 1
+size = Vector2i(720, 500)
+transient_to_focused = true
+always_on_top = true
+transparent = false
+script = ExtResource("7_hksrk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerCanvasLayer/ImportSavedPlayersPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 716.0
+offset_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Control" type="Control" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Import Saved Players"
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="TextEdit" type="TextEdit" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/MarginContainer"]
+layout_mode = 2
+placeholder_text = "Paste player csv here...
+Format is name,attr1,attr2,attr3,attr4"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer"]
+layout_mode = 2
+
+[node name="ImportButton" type="Button" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Import"
+
+[node name="CloseButton" type="Button" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close
+"
+
+[node name="Control2" type="Control" parent="PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
 [node name="UIGridContainer" type="VBoxContainer" parent="PlayerCanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,7 +416,24 @@ size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="VerticalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="InfoRow" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/InfoRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerCanvasLayer/UIGridContainer/InfoRow"]
+layout_mode = 2
+text = "Create or import all saved players, then drag the ones playing to \"Available.\" 
+Select \"Edit Teams\" below when finished."
+horizontal_alignment = 1
+
+[node name="HorizontalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/InfoRow"]
+custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="ButtonRow1" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
@@ -294,25 +468,6 @@ layout_mode = 2
 
 [node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-
-[node name="ButtonRow2" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
-layout_mode = 2
-
-[node name="HorizontalSpaceControl1" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-
-[node name="Button1" type="Button" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
-custom_minimum_size = Vector2(150, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-action_mode = 0
-text = "Make this button do something
-"
-
-[node name="HorizontalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow2"]
-custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="MainRowLabels" type="HBoxContainer" parent="PlayerCanvasLayer/UIGridContainer"]
@@ -395,12 +550,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-text = "Edit Saved/Available Players"
+text = "1. Select/Edit Players"
 
 [node name="ShowTeamCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Edit Teams"
+text = "2. Edit Teams"
 
 [node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 custom_minimum_size = Vector2(30, 50)

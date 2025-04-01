@@ -65,7 +65,9 @@ text = "Attribute 1"
 
 [node name="Attr1Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+min_value = 1.0
 max_value = 10.0
+value = 1.0
 select_all_on_focus = true
 
 [node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer2"]
@@ -86,7 +88,9 @@ text = "Attribute 2"
 
 [node name="Attr2Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer3"]
 layout_mode = 2
+min_value = 1.0
 max_value = 10.0
+value = 1.0
 select_all_on_focus = true
 
 [node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer3"]
@@ -107,7 +111,9 @@ text = "Attribute 3"
 
 [node name="Attr3Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer4"]
 layout_mode = 2
+min_value = 1.0
 max_value = 10.0
+value = 1.0
 select_all_on_focus = true
 
 [node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer4"]
@@ -128,7 +134,9 @@ text = "Attribute 4"
 
 [node name="Attr4Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer5"]
 layout_mode = 2
+min_value = 1.0
 max_value = 10.0
+value = 1.0
 select_all_on_focus = true
 
 [node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer5"]
@@ -146,8 +154,7 @@ layout_mode = 2
 [node name="SavePlayerButton" type="Button" parent="VBoxContainer/HBoxContainer6"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Save and Create Another Player
-"
+text = "Save"
 
 [node name="HorizontalSpaceControl4" type="Control" parent="VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(30, 50)
@@ -156,7 +163,7 @@ layout_mode = 2
 [node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer6"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Close"
+text = "Cancel"
 
 [node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(30, 50)

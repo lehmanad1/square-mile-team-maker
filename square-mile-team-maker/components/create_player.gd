@@ -13,6 +13,9 @@ signal close_popup
 @onready var validation_label = $VBoxContainer/ValidationLabel
 @onready var team_data = $"../../../TeamData"
 
+var editable = false
+var previous_name = ""
+
 func _ready():
 	save_button.connect("pressed", Callable(self, "_on_save_player_button_pressed"));
 	close_button.connect("pressed", Callable(self, "_close_button_pressed"));
@@ -23,8 +26,7 @@ func _close_button_pressed() -> void:
 	emit_signal("close_popup")
 	
 
-func _on_save_player_button_pressed(close:bool = false) -> void:
-	
+func _on_save_player_button_pressed(close:bool = true) -> void:
 	if name_edit.text == "":
 		_show_validation_text("Please enter a name for this player")
 		return
@@ -36,14 +38,15 @@ func _on_save_player_button_pressed(close:bool = false) -> void:
 		attr3_edit.value,
 		attr4_edit.value
 	)
-	if team_data.try_add_saved_player(player_data):
-		
+	if team_data.try_add_saved_player(player_data, editable, previous_name):
 		emit_signal("player_saved", player_data)
 		_clear_input()
 		if close:
 			emit_signal("close_popup")
 		else:
 			_show_validation_text("Player Added", false)
+	else:
+		_show_validation_text("Please choose a different name for this player")
 
 func _on_text_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -53,16 +56,28 @@ func _on_text_gui_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()  # Prevents Enter from adding a new line
 		
 func _show_validation_text(text:String, failure:bool = true) -> void:
-	if failure: 
+	if failure:
 		validation_label.set("theme_override_colors/font_color", Color(255, 0, 0))
 	else:
 		validation_label.set("theme_override_colors/font_color", Color(0, 255, 0))
 	validation_label.text = text
 
+func _load_saved_player(player_data: Player):
+	previous_name = player_data.name;
+	name_edit.text = player_data.name;
+	attr1_edit.value = player_data.attr1;
+	attr2_edit.value = player_data.attr2;
+	attr3_edit.value = player_data.attr3;
+	attr4_edit.value = player_data.attr4;
+	editable = true
+
 func _clear_input() -> void:
+	print("clearing input")
 	_show_validation_text("", false)
 	name_edit.text = ""
 	attr1_edit.value = 0
 	attr2_edit.value = 0
 	attr3_edit.value = 0
 	attr4_edit.value = 0
+	editable = false
+	previous_name = ""
