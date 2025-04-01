@@ -17,6 +17,7 @@ script = ExtResource("1_qc0iw")
 script = ExtResource("6_cj4bg")
 
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="EditTeamSettingsPopup" type="PopupPanel" parent="TeamCanvasLayer"]
@@ -24,7 +25,6 @@ auto_translate_mode = 1
 transparent_bg = false
 initial_position = 1
 size = Vector2i(720, 500)
-visible = true
 transient_to_focused = true
 always_on_top = true
 transparent = false
@@ -154,7 +154,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VerticalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer"]
-custom_minimum_size = Vector2(0, 75)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="ButtonRow1" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
@@ -203,16 +203,49 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
-text = "Autofill Teams Randomly"
+text = "Autofill Randomly"
 
 [node name="AutofillTeamsButton2" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 action_mode = 0
-text = "Autofill By Attributes"
+text = "Autofill by Skill Balance"
 
 [node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="SliderRow" type="HBoxContainer" parent="TeamCanvasLayer/UIGridContainer"]
+layout_mode = 2
+
+[node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+layout_mode = 2
+text = "Skill Balance"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+layout_mode = 2
+text = "Match by Skill"
+
+[node name="SkillSlider" type="HSlider" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tick_count = 10
+
+[node name="Label3" type="Label" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
+layout_mode = 2
+text = "Random"
+
+[node name="HorizontalSpaceControl4" type="Control" parent="TeamCanvasLayer/UIGridContainer/SliderRow"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
@@ -287,10 +320,15 @@ layout_mode = 2
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
+[node name="ImportProfileCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1. Coming Soon"
+
 [node name="ShowPlayerCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1. Edit Saved/Available Players"
+text = "2. Select/Edit Players"
 
 [node name="DisabledShowTeamsCanvasButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
@@ -307,7 +345,6 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
 [node name="PlayerCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 
 [node name="CreatePlayerPopup" type="PopupPanel" parent="PlayerCanvasLayer"]
@@ -315,6 +352,7 @@ auto_translate_mode = 1
 transparent_bg = false
 initial_position = 1
 size = Vector2i(720, 500)
+visible = true
 transient_to_focused = true
 always_on_top = true
 transparent = false
@@ -341,8 +379,8 @@ text = "Edit Player"
 [node name="CreatePlayer" parent="PlayerCanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 716.0
-offset_bottom = 496.0
+offset_right = -4.0
+offset_bottom = -4.0
 size_flags_horizontal = 3
 script = ExtResource("4_b48f2")
 
@@ -546,11 +584,16 @@ layout_mode = 2
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
+[node name="ImportProfileCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1. Coming Soon"
+
 [node name="ShowPlayerCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-text = "1. Select/Edit Players"
+text = "2. Select/Edit Players"
 
 [node name="ShowTeamCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2

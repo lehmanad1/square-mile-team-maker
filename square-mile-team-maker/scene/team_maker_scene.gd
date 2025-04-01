@@ -13,6 +13,7 @@ signal team_size_updated
 @onready var autofill_teams_randomly_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
 @onready var autofill_teams_attribute_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton2"
 @onready var show_player_canvas_button = $TeamCanvasLayer/UIGridContainer/BottomRow/ShowPlayerCanvasButton
+@onready var skill_slider = $TeamCanvasLayer/UIGridContainer/SliderRow/SkillSlider
 
 # PlayerCanvasLayer Nodes
 @onready var player_canvas_layer = $PlayerCanvasLayer
@@ -75,7 +76,8 @@ func _autofill_teams_randomly():
 	team_data.autofill_players_to_teams_randomly()
 
 func _autofill_teams_by_attribute():
-	team_data.autofill_players_to_team_by_attributes()
+	var variability = skill_slider.value;
+	team_data.autofill_players_by_pool_variability(variability)
 
 func _create_team() -> void:
 	var totalTeamCount = team_data.teams.size() + 1

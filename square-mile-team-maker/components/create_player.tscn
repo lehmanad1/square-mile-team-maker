@@ -61,7 +61,11 @@ size_flags_stretch_ratio = 0.2
 
 [node name="Attr1Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "Attribute 1"
+text = "Receiving"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(14, 50)
+layout_mode = 2
 
 [node name="Attr1Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -84,7 +88,11 @@ layout_mode = 2
 
 [node name="Attr2Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
 layout_mode = 2
-text = "Attribute 2"
+text = "Passing"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(29, 50)
+layout_mode = 2
 
 [node name="Attr2Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer3"]
 layout_mode = 2
@@ -107,7 +115,11 @@ layout_mode = 2
 
 [node name="Attr3Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
 layout_mode = 2
-text = "Attribute 3"
+text = "Hitting"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(35, 50)
+layout_mode = 2
 
 [node name="Attr3Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer4"]
 layout_mode = 2
@@ -130,7 +142,11 @@ layout_mode = 2
 
 [node name="Attr4Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
 layout_mode = 2
-text = "Attribute 4"
+text = "Vibes"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(46, 50)
+layout_mode = 2
 
 [node name="Attr4Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer5"]
 layout_mode = 2
