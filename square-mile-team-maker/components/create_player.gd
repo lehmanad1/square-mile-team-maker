@@ -51,9 +51,6 @@ func _on_save_player_button_pressed(close:bool = true) -> void:
 func _on_text_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		_show_validation_text("", false)
-	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
-		_on_save_player_button_pressed()
-		get_viewport().set_input_as_handled()  # Prevents Enter from adding a new line
 		
 func _show_validation_text(text:String, failure:bool = true) -> void:
 	if failure:
