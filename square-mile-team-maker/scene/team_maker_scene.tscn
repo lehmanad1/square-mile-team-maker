@@ -164,18 +164,11 @@ layout_mode = 2
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="CreatePlayerButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
-custom_minimum_size = Vector2(150, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-action_mode = 0
-text = "Edit Team Settings"
-
 [node name="CreateTeamButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Create Team"
+text = "Add New Team"
 
 [node name="ResetTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 0)
@@ -199,6 +192,7 @@ custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="AutofillTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
+visible = false
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -352,7 +346,6 @@ auto_translate_mode = 1
 transparent_bg = false
 initial_position = 1
 size = Vector2i(720, 500)
-visible = true
 transient_to_focused = true
 always_on_top = true
 transparent = false
@@ -379,8 +372,8 @@ text = "Edit Player"
 [node name="CreatePlayer" parent="PlayerCanvasLayer/CreatePlayerPopup" instance=ExtResource("1_u1i5f")]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 716.0
+offset_bottom = 496.0
 size_flags_horizontal = 3
 script = ExtResource("4_b48f2")
 
@@ -498,7 +491,7 @@ text = "Import Saved Player List"
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Copy Saved To Clipboard"
+text = "Copy All To Clipboard"
 
 [node name="HorizontalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(30, 50)
