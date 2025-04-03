@@ -9,7 +9,6 @@ func _drop_data(position, data):
 	print("attempting drop")
 	var dragged_item = data["item"]
 	if !dragged_item:
-		print("Error: No dragged item found in data.")
 		return
 		
 	var original_parent = dragged_item.get_parent()

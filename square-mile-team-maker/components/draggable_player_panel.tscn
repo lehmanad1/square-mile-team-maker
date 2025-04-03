@@ -1,16 +1,51 @@
-[gd_scene load_steps=2 format=3 uid="uid://xxtbdk1aq518"]
+[gd_scene load_steps=2 format=3 uid="uid://cgwfs414tsm1p"]
 
-[ext_resource type="Script" uid="uid://bn8fyjaa2bskr" path="res://components/draggable_player_panel.gd" id="1_ow7lj"]
+[ext_resource type="Script" uid="uid://bn8fyjaa2bskr" path="res://components/draggable_player_panel.gd" id="1_y0kbv"]
 
 [node name="PlayerPanelContainer" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 40)
 offset_right = 200.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
-script = ExtResource("1_ow7lj")
+script = ExtResource("1_y0kbv")
 
-[node name="PlayerName" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="PlayerName" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Player Name Here"
 horizontal_alignment = 1
 text_overrun_behavior = 3
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_vertical = 0
+columns = 2
+
+[node name="Attr1Label" type="Label" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="Attr2Label" type="Label" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+
+[node name="Attr3Label" type="Label" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+
+[node name="Attr4Label" type="Label" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
