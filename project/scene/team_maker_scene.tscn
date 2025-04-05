@@ -5,16 +5,13 @@
 [ext_resource type="Script" uid="uid://d2sf6gywjyjt8" path="res://components/create_player_popup.gd" id="2_6gtjv"]
 [ext_resource type="Script" uid="uid://bmtakuq8hrx8s" path="res://components/create_player.gd" id="4_b48f2"]
 [ext_resource type="Script" uid="uid://g6b7i62w214j" path="res://components/player_list_container.gd" id="4_nosjr"]
-[ext_resource type="Script" uid="uid://comgeel857d3r" path="res://scripts/team_data.gd" id="6_cj4bg"]
 [ext_resource type="Script" uid="uid://bm681r7esj1u0" path="res://scene/import_saved_players_popup.gd" id="7_hksrk"]
 [ext_resource type="Script" uid="uid://ch1ly3jf3xxnn" path="res://components/saved_player_list.gd" id="7_jwh2g"]
 [ext_resource type="Script" uid="uid://bd3m3t58a6eh5" path="res://components/available_player_list.gd" id="7_lpwxn"]
+[ext_resource type="PackedScene" uid="uid://j54v88xvtgo0" path="res://managers/profile_manager.tscn" id="9_hksrk"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qc0iw")
-
-[node name="TeamData" type="Node" parent="."]
-script = ExtResource("6_cj4bg")
 
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -600,3 +597,5 @@ layout_mode = 2
 [node name="VerticalSpaceControl3" type="Control" parent="PlayerCanvasLayer/UIGridContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+
+[node name="ProfileManager" parent="." instance=ExtResource("9_hksrk")]

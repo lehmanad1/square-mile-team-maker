@@ -7,7 +7,7 @@ signal team_size_updated
 @onready var create_player_modal = $"TeamCanvasLayer/CreatePlayerPopup/CreatePlayer"
 @onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 @onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
-@onready var team_data = $TeamData
+@onready var profile_manager = $ProfileManager
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
 @onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
 @onready var autofill_teams_randomly_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
@@ -39,8 +39,8 @@ func _ready():
 		teamless_player_list = $CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 	
 	# TeamCanvas Connections
-	team_data.connect("teams_updated", Callable(self, "_redraw_teams"))
-	team_data.connect("teamless_players_updated", Callable(self, "_redraw_teamless_players"))
+	profile_manager.connect("teams_updated", Callable(self, "_redraw_teams"))
+	profile_manager.connect("teamless_players_updated", Callable(self, "_redraw_teamless_players"))
 	create_team_button.pressed.connect(Callable(self, "_add_new_team"))
 	reset_teams_button.pressed.connect(Callable(self, "_reset_teams"))
 	autofill_teams_randomly_button.pressed.connect(Callable(self, "_autofill_teams_randomly"))
@@ -49,7 +49,7 @@ func _ready():
 	show_player_canvas_button.connect("pressed", Callable(self, "_toggle_canvas_visibility"))
 	
 	# PlayerCanvas Connections
-	team_data.connect("saved_players_updated", Callable(self, "_redraw_player_lists"))
+	profile_manager.connect("saved_players_updated", Callable(self, "_redraw_player_lists"))
 	available_players_list.connect("mark_player_as_available", Callable(self, "_mark_player_as_available"))
 	saved_players_list.connect("mark_player_as_unavailable", Callable(self, "_mark_player_as_unavailable"))
 	show_team_canvas_button.connect("pressed", Callable(self, "_toggle_canvas_visibility"))
@@ -67,20 +67,20 @@ func _instantiate_player_panel(player_data: Player, list:Control) -> void:
 
 # Team View Methods
 func _add_new_team():
-	team_data.add_new_team()
+	profile_manager.add_new_team()
 
 func _reset_teams():
-	team_data.reset_teams();
+	profile_manager.reset_teams();
 
 func _autofill_teams_randomly():
-	team_data.autofill_players_to_teams_randomly()
+	profile_manager.autofill_players_to_teams_randomly()
 
 func _autofill_teams_by_attribute():
 	var variability = skill_slider.value;
-	team_data.autofill_players_by_pool_variability(variability)
+	profile_manager.autofill_players_by_pool_variability(variability)
 
 func _create_team() -> void:
-	var totalTeamCount = team_data.teams.size() + 1
+	var totalTeamCount = profile_manager.teams.size() + 1
 	var team_name = "Team #" + str(totalTeamCount)
 	if totalTeamCount < 6:
 		var newTeam = TeamScene.instantiate()
@@ -90,16 +90,16 @@ func _create_team() -> void:
 func _redraw_teamless_players():
 	for child in teamless_player_list.get_children():
 		child.queue_free()
-	for teamless_player in team_data.teamlessPlayers:
+	for teamless_player in profile_manager.teamlessPlayers:
 		_instantiate_player_panel(teamless_player, teamless_player_list)
 
 func _redraw_teams():
 	for child in teams_list.get_children():
 		teams_list.remove_child(child)
-	for team in team_data.teams:
+	for team in profile_manager.teams:
 		var container = _instantiate_team_container(team)
-		container.connect("add_player_to_team", Callable(team_data, "add_player_to_team"))
-		container.connect("remove_player_from_team", Callable(team_data, "remove_player_from_team"))
+		container.connect("add_player_to_team", Callable(profile_manager, "add_player_to_team"))
+		container.connect("remove_player_from_team", Callable(profile_manager, "remove_player_from_team"))
 		teams_list.add_child(container)
 	pass;
 
@@ -112,14 +112,14 @@ func _remove_team() ->  void:
 	pass;
 	
 func _remove_player_from_team(team_name: String, target_player: Player):
-	team_data.remove_player_from_team(target_player);
+	profile_manager.remove_player_from_team(target_player);
 	
 # Player View Methods
 func _mark_player_as_available(player_data: Player):
-	team_data.mark_player_as_available(player_data);
+	profile_manager.mark_player_as_available(player_data);
 	
 func _mark_player_as_unavailable(player_data: Player):
-	team_data.mark_player_as_unavailable(player_data);	
+	profile_manager.mark_player_as_unavailable(player_data);	
 
 func _instantiate_editable_player_panel(player_data: Player):
 	var panel = EditablePlayerPanelScene.instantiate()
@@ -135,20 +135,20 @@ func _redraw_player_lists():
 func _redraw_available_players_dropdown():
 	for child in available_players_list.get_children():
 		available_players_list.remove_child(child);
-	for player in team_data.availablePlayers:
+	for player in profile_manager.availablePlayers:
 		print("avail ",player.name)
 		_instantiate_player_panel(player, available_players_list);
 		
 func _redraw_saved_players_dropdown():
 	for child in saved_players_list.get_children():
 		saved_players_list.remove_child(child);
-	for player in team_data.get_unavailable_players():
+	for player in profile_manager.get_unavailable_players():
 		print("saved ",player.name)
 		_instantiate_editable_player_panel(player);
 
 func _import_saved_players():
-	team_data.import_saved_player_data(import_saved_players_text.text)
+	profile_manager.import_saved_player_data(import_saved_players_text.text)
 																				 
 func _export_saved_players():
-	var export_string = team_data.export_saved_player_data();
+	var export_string = profile_manager.export_saved_player_data();
 	DisplayServer.clipboard_set(export_string);
