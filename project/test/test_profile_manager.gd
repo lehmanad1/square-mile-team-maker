@@ -6,9 +6,13 @@ var profile_manager: ProfileManager;
 
 func before_each():
 	profile_manager = await ProfileManager.instantiate();
+	add_child(profile_manager)
+	await get_tree().process_frame;
+		
 
 func after_each():
-	profile_manager = null;
+	remove_child(profile_manager);
+	profile_manager.queue_free();
 
 func test_saved_players_updated_signal():
 	watch_signals(profile_manager);

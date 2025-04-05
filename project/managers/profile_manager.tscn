@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://j54v88xvtgo0"]
+
+[ext_resource type="Script" uid="uid://cxa46504cs0kr" path="res://managers/profile_manager.gd" id="1_4wmm3"]
+[ext_resource type="Script" uid="uid://byypfyfqmolqw" path="res://saved_player_manager.gd" id="2_ouv4w"]
+[ext_resource type="Script" uid="uid://c7uttpvp0cny8" path="res://team_manager.gd" id="3_cx50v"]
+[ext_resource type="Script" uid="uid://bkur30acldlcr" path="res://attributes_manager.gd" id="4_lcms1"]
+
+[node name="ProfileManager" type="Node"]
+script = ExtResource("1_4wmm3")
+
+[node name="SavedPlayerManager" type="Node" parent="."]
+script = ExtResource("2_ouv4w")
+
+[node name="AvailablePlayersManager" type="Node" parent="SavedPlayerManager"]
+
+[node name="TeamManager" type="Node" parent="SavedPlayerManager/AvailablePlayersManager"]
+script = ExtResource("3_cx50v")
+
+[node name="AttributesManager" type="Node" parent="."]
+script = ExtResource("4_lcms1")
