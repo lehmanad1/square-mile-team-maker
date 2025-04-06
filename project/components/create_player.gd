@@ -11,7 +11,7 @@ signal close_popup
 @onready var attr3_edit = $VBoxContainer/HBoxContainer4/Attr3Edit
 @onready var attr4_edit = $VBoxContainer/HBoxContainer5/Attr4Edit
 @onready var validation_label = $VBoxContainer/ValidationLabel
-@onready var team_data = $"../../../TeamData"
+@onready var profile_manager = $"../../../ProfileManager"
 
 var editable = false
 var previous_name = ""
@@ -38,7 +38,7 @@ func _on_save_player_button_pressed(close:bool = true) -> void:
 		attr3_edit.value,
 		attr4_edit.value
 	)
-	if team_data.try_add_saved_player(player_data, editable, previous_name):
+	if profile_manager.try_add_saved_player(player_data, editable, previous_name):
 		emit_signal("player_saved", player_data)
 		_clear_input()
 		if close:
