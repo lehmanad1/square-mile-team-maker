@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dcjt4fi3bgu4u"]
+
+[node name="PlayerAttributeContainer" type="HBoxContainer"]
+z_index = 1
+size_flags_horizontal = 3
+
+[node name="HorizontalSpaceControl1" type="Control" parent="."]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+size_flags_stretch_ratio = 0.2
+
+[node name="AttributeLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Attribute Name"
+
+[node name="HorizontalSpaceControl3" type="Control" parent="."]
+custom_minimum_size = Vector2(14, 50)
+layout_mode = 2
+
+[node name="AttributeEdit" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+select_all_on_focus = true
+
+[node name="HorizontalSpaceControl2" type="Control" parent="."]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+size_flags_horizontal = 3

@@ -1,10 +1,16 @@
-[gd_scene format=3 uid="uid://b4gjajs8knxvk"]
+[gd_scene load_steps=2 format=3 uid="uid://b4gjajs8knxvk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n1xmm"]
 
 [node name="PanelContainer" type="PanelContainer"]
+material = SubResource("CanvasItemMaterial_n1xmm")
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ActiveCheckBox" type="CheckBox" parent="HBoxContainer"]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]

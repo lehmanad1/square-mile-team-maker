@@ -11,7 +11,7 @@ func _try_add_player_to_team(item, target):
 		
 func _try_remove_player_from_team(item, target):
 	if item is PanelContainer and "player" in item and "team" in target.get_parent().get_parent():
-		dragged_player_from_team.emit(target.get_parent().get_parent().team.team_name, item.player)
+		dragged_player_from_team.emit(item.player)
 	else:
 		print("remove: no dice")
 		

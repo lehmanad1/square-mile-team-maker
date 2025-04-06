@@ -50,113 +50,18 @@ placeholder_text = "Enter Name Here"
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-z_index = 1
+[node name="AttributesLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+text = "Attributes"
+horizontal_alignment = 1
 
-[node name="HorizontalSpaceControl1" type="Control" parent="VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(30, 50)
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
-size_flags_stretch_ratio = 0.2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 
-[node name="Attr1Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Receiving"
-
-[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(14, 50)
-layout_mode = 2
-
-[node name="Attr1Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 1.0
-select_all_on_focus = true
-
-[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HorizontalSpaceControl1" type="Control" parent="VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-
-[node name="Attr2Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "Passing"
-
-[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(29, 50)
-layout_mode = 2
-
-[node name="Attr2Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 1.0
-select_all_on_focus = true
-
-[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HorizontalSpaceControl1" type="Control" parent="VBoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-
-[node name="Attr3Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
-layout_mode = 2
-text = "Hitting"
-
-[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(35, 50)
-layout_mode = 2
-
-[node name="Attr3Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer4"]
-layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 1.0
-select_all_on_focus = true
-
-[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HorizontalSpaceControl1" type="Control" parent="VBoxContainer/HBoxContainer5"]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 2
-
-[node name="Attr4Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
-layout_mode = 2
-text = "Vibes"
-
-[node name="HorizontalSpaceControl3" type="Control" parent="VBoxContainer/HBoxContainer5"]
-custom_minimum_size = Vector2(46, 50)
-layout_mode = 2
-
-[node name="Attr4Edit" type="SpinBox" parent="VBoxContainer/HBoxContainer5"]
-layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 1.0
-select_all_on_focus = true
-
-[node name="HorizontalSpaceControl2" type="Control" parent="VBoxContainer/HBoxContainer5"]
-custom_minimum_size = Vector2(30, 50)
+[node name="AttributeSelectionContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 

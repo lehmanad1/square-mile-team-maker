@@ -27,8 +27,8 @@ func _set_text():
 func _add_player_to_team(team_name:String, player:Player):
 	add_player_to_team.emit(team_name, player)
 	
-func _remove_player_from_team(team_name:String, player:Player):
-	remove_player_from_team.emit(team_name, player)
+func _remove_player_from_team(player:Player):
+	remove_player_from_team.emit(player)
 	
 func _set_team_members():
 	for i in team.players.size():

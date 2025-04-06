@@ -5,6 +5,7 @@ class_name ProfileManager
 signal teamless_players_updated
 signal teams_updated
 signal saved_players_updated
+signal saved_profiles_updated
 #endregion
 
 #region managers
@@ -12,6 +13,7 @@ signal saved_players_updated
 @onready var available_player_manager = $AvailablePlayerManager;
 @onready var team_manager = $TeamManager;
 @onready var attributes_manager = $AttributesManager;
+@onready var saved_profiles_manager = $SavedProfilesManager;
 #endregion
 
 var max_team_size = 8
@@ -36,6 +38,15 @@ var teamless_players: Array[Player] :
 var teams: Array[Team] :
 	get:
 		return team_manager.teams;
+		
+var saved_profiles: Array[Profile] :
+	get:
+		return saved_profiles_manager.saved_profiles;
+
+var active_profile: Profile :
+	get:
+		return saved_profiles_manager.active_profile;
+
 #endregion
 
 #region setup funcs
@@ -56,15 +67,28 @@ func _manage_child_signals():
 	available_player_manager.saved_players_updated.connect(Callable(self, "_emit_saved_players_updated"));
 	available_player_manager.teamless_players_updated.connect(Callable(self, "_emit_teamless_players_updated"));
 	team_manager.teams_updated.connect(Callable(self,"_emit_teams_update"));
+	saved_profiles_manager.saved_profiles_updated.connect(Callable(self,"_emit_saved_profiles_updated"));
+	saved_profiles_manager.switch_active_profile.connect(Callable(self, "load_active_profile"));
 #endregion
 
 #region profile management
+func set_active_profile(profile:Profile):
+	saved_profiles_manager.set_active_profile(profile);
+
+func load_active_profile():
+	var current_profile = export_profile();
+	load_profile(active_profile);
+
 func load_profile(profile: Profile) -> void:
 	attributes_manager.load(profile.attributes);
 	saved_player_manager.load(profile.saved_players);
 	team_manager.load(profile.teams);
 	available_player_manager.load(profile.available_players, profile.teams);
 	max_team_size = profile.max_team_size;
+	teamless_players_updated.emit();
+	teams_updated.emit();
+	saved_players_updated.emit();
+	_resync_active_profile();
 
 func export_profile() -> Profile:
 	var profile = Profile.new();
@@ -74,11 +98,20 @@ func export_profile() -> Profile:
 	profile.attributes = attributes;
 	profile.max_team_size = max_team_size;
 	return profile;
+	
+func try_add_saved_profile(profile: Profile) -> bool:
+	return saved_profiles_manager.try_add_profile(profile);
+
+func _resync_active_profile():
+	saved_profiles_manager.resync_active_profile(export_profile());
+
+func _emit_saved_profiles_updated():
+	saved_profiles_updated.emit();
 #endregion
 
 #region saved_player_manager passthroughs
 func import_saved_player_data(saved_players_string: String):
-	return saved_player_manager.import_saved_player_data(saved_players_string);
+	return saved_player_manager.import_saved_player_data(saved_players_string, attributes);
 	
 func export_saved_player_data() -> String:
 	return saved_player_manager.export_saved_player_data();
