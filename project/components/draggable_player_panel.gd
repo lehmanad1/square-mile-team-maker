@@ -3,6 +3,7 @@ extends PanelContainer
 var player: Player
 
 @onready var label = $HBoxContainer/PlayerName
+@onready var attr_total_label = $HBoxContainer/AttrTotalLabel
 
 var is_touch_dragging = false
 
@@ -21,7 +22,7 @@ func set_player_name() -> void:
 
 func set_player_attributes() -> void:
 	await ready
-	#todo: figure out attribute display
+	attr_total_label.text = str(player.get_attribute_total())
 
 func _can_drop_data(position, data):
 	return true

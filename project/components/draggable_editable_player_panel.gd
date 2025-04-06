@@ -7,6 +7,7 @@ var is_touch_dragging = false
 
 @onready var label = $HBoxContainer/PlayerName
 @onready var editPlayerButton = $HBoxContainer/EditPlayerButton
+@onready var attr_total_label = $HBoxContainer/AttrTotalLabel
 
 func _ready():
 	await get_tree().process_frame
@@ -24,7 +25,7 @@ func set_player_name() -> void:
 
 func set_player_attributes() -> void:
 	await ready
-	# todo: figure out attribute display
+	attr_total_label.text = str(player.get_attribute_total())
 
 func _can_drop_data(position, data):
 	return true
