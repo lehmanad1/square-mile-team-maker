@@ -6,14 +6,10 @@ signal dragged_player_from_team(team_name: String, player: Player)
 func _try_add_player_to_team(item, target):
 	if item is PanelContainer and "player" in item and "team" in target.get_parent().get_parent():
 		dragged_player_to_team.emit(target.get_parent().get_parent().team.team_name, item.player)
-	else:
-		print("add: no dice")
 		
 func _try_remove_player_from_team(item, target):
 	if item is PanelContainer and "player" in item and "team" in target.get_parent().get_parent():
 		dragged_player_from_team.emit(item.player)
-	else:
-		print("remove: no dice")
 		
 func _can_drop_data(position, data):
 	return true
@@ -22,7 +18,7 @@ func _drop_data(position, data):
 
 	var dragged_item = data["item"]
 	if !dragged_item:
-		print("Error: No dragged item found in data.")
+		printerr("Error: No dragged item found in data.")
 		return
 	
 	var existing_items = get_children()
@@ -30,8 +26,6 @@ func _drop_data(position, data):
 	var target_item = null
 	var min_distance = INF
 	var local_pos = get_local_mouse_position()  # Convert position to local coordinates
-
-	print("Local Mouse Position:", local_pos)
 
 	# Iterate through existing items to find the closest one
 	for i in range(existing_items.size()):
@@ -57,25 +51,18 @@ func _drop_data(position, data):
 
 		# Remove both items from their current parents
 		if original_parent:
-			# original_parent.remove_child(dragged_item)
 			_try_remove_player_from_team(dragged_item, original_parent)
 			
-		# remove_child(target_item)
 		_try_remove_player_from_team(target_item, self)
 
 		# Swap positions
-		# add_child(dragged_item)
 		_try_add_player_to_team(dragged_item, self)
 		
 		if original_parent:
-			# original_parent.add_child(target_item)
-			print("original parent swap")
 			_try_add_player_to_team(target_item, original_parent)
 	else:
 		# Default behavior if there's no existing item at the position
 		if original_parent:
-			# original_parent.remove_child(dragged_item)
-			print("original parent else")
 			_try_remove_player_from_team(dragged_item, original_parent)
 
 		# add_child(dragged_item)

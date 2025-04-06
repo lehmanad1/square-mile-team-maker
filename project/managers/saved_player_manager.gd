@@ -2,7 +2,7 @@ extends Node
 class_name SavedPlayerManager
 
 signal saved_players_updated;
-
+signal switch_active_profile;
 var saved_players: Array[Player] = [];
 
 func load(loaded_saved_players: Array[Player]):
@@ -46,6 +46,7 @@ func try_add_saved_player(player: Player, is_edit: bool = false, previous_name: 
 				return true;
 	saved_players.append(player);
 	saved_players_updated.emit();
+	switch_active_profile.emit();
 	return true
 
 

@@ -132,6 +132,7 @@ func _redraw_saved_profiles():
 		
 
 func _redraw_active_profile_selection(profile: Profile):		
+	create_player_popup_form.create_new_attribute_list();
 	profile_view_container.visible = true;
 	profile_name_label.text = profile.profile_name;
 	max_teams_size_label.text = str(profile.max_team_size);
@@ -230,7 +231,6 @@ func _redraw_saved_players_dropdown():
 	for child in saved_players_list.get_children():
 		saved_players_list.remove_child(child);
 	for player in profile_manager.get_unavailable_players():
-		print("saved ",player.name)
 		_instantiate_editable_player_panel(player);
 
 func _import_saved_players():

@@ -82,7 +82,6 @@ func _show_attribute_validation_text(text:String, failure:bool = true) -> void:
 	attribute_validation_label.text = text
 
 func _remove_attribute(attribute: Attribute):
-	print("attempting to remove attribute");
 	attributes_to_add.erase(attribute);
 	_redraw_attribute_list();
 	

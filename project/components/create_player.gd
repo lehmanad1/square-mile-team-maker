@@ -39,11 +39,8 @@ func _on_save_player_button_pressed(close:bool = true) -> void:
 	for attribute_value_selector in attribute_container.get_children():
 		var attribute_name = attribute_value_selector.get_node("AttributeLabel").text
 		var attribute_value = attribute_value_selector.get_node("AttributeEdit").value
-		print(profile_manager.attributes[0].attribute_name)
 		var found_attribute_index = profile_manager.attributes.find_custom(func(x): return x.attribute_name == attribute_name);
-		print(found_attribute_index)
 		if found_attribute_index <= -1:
-			printerr("attribute not found");
 			return;
 		
 		var attribute_weight = profile_manager.attributes[found_attribute_index].attribute_weight
@@ -80,7 +77,7 @@ func _load_saved_player(player_data: Player):
 	_reset_attribute_list(player_data.attributes);
 	editable = true
 
-func _create_new_attribute_list():
+func create_new_attribute_list():
 	var attribute_values: Array[AttributeValue] = [];
 	attribute_values.assign(profile_manager.attributes.map(func(x): return AttributeValue.new(x.attribute_name, x.attribute_weight, 1)))
 	_reset_attribute_list(attribute_values);
@@ -98,9 +95,8 @@ func _instantiate_player_attribute_container(attribute: AttributeValue):
 	attribute_container.add_child(attribute_value_selector)
 
 func _clear_input() -> void:
-	print("clearing input")
 	_show_validation_text("", false)
 	name_edit.text = ""
-	_create_new_attribute_list()
+	create_new_attribute_list()
 	editable = false
 	previous_name = ""

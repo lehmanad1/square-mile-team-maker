@@ -22,7 +22,7 @@ func _save_profiles():
 	save_file.store_line(save_string);
 	
 func load_profiles():
-	# FileAccess.open(SAVE_LOCATION,FileAccess.WRITE).resize(0);
+	FileAccess.open(SAVE_LOCATION,FileAccess.WRITE).resize(0);
 	if not FileAccess.file_exists(SAVE_LOCATION):
 		return
 	var file_as_string = FileAccess.get_file_as_string(SAVE_LOCATION);
@@ -31,5 +31,4 @@ func load_profiles():
 	var profile_dict = JSON.parse_string(file_as_string);
 	for profile_string in profile_dict.values():
 		var profile = Profile.new().from_json(profile_string);
-		print('loading ' + profile.profile_name);
 		profile_manager.try_add_saved_profile(profile);

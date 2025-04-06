@@ -6,7 +6,6 @@ func _can_drop_data(position, data):
 	return true
 	
 func _drop_data(position, data):
-	print("attempting drop")
 	var dragged_item = data["item"]
 	if !dragged_item:
 		return

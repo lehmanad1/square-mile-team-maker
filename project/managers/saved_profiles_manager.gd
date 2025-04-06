@@ -12,6 +12,7 @@ func try_add_profile(profile: Profile) -> bool:
 	else:
 		saved_profiles.append(profile);
 		active_profile = profile;
+		switch_active_profile.emit();
 		saved_profiles_updated.emit();
 		return true
 		
