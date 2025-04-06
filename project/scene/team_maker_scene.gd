@@ -2,12 +2,13 @@ extends Node2D
 
 signal team_size_updated
 
+@onready var profile_manager = $ProfileManager
+
 # TeamCanvasLayer Nodes
 @onready var team_canvas_layer = $TeamCanvasLayer
 @onready var create_player_modal = $"TeamCanvasLayer/CreatePlayerPopup/CreatePlayer"
 @onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 @onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
-@onready var profile_manager = $ProfileManager
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
 @onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
 @onready var autofill_teams_randomly_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
@@ -35,15 +36,12 @@ var EditablePlayerPanelScene = preload("res://components/draggable_editable_play
 
 func _ready():
 	await get_tree().process_frame
-	if teamless_player_list == null:
-		teamless_player_list = $CanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 	
 	# TeamCanvas Connections
 	profile_manager.connect("teams_updated", Callable(self, "_redraw_teams"))
 	profile_manager.connect("teamless_players_updated", Callable(self, "_redraw_teamless_players"))
 	create_team_button.pressed.connect(Callable(self, "_add_new_team"))
 	reset_teams_button.pressed.connect(Callable(self, "_reset_teams"))
-	autofill_teams_randomly_button.pressed.connect(Callable(self, "_autofill_teams_randomly"))
 	autofill_teams_attribute_button.pressed.connect(Callable(self, "_autofill_teams_by_attribute"))
 	teamless_player_list.connect("remove_player_from_team", Callable(self, "_remove_player_from_team"))
 	show_player_canvas_button.connect("pressed", Callable(self, "_toggle_canvas_visibility"))
@@ -56,6 +54,10 @@ func _ready():
 	export_players_button.connect("pressed", Callable(self, "_export_saved_players"))
 	import_saved_players_button.connect("pressed", Callable(self, "_import_saved_players"))
 #Shared View Methods
+
+
+
+
 func _toggle_canvas_visibility():
 	team_canvas_layer.visible = not team_canvas_layer.visible
 	player_canvas_layer.visible = not player_canvas_layer.visible
@@ -72,9 +74,6 @@ func _add_new_team():
 func _reset_teams():
 	profile_manager.reset_teams();
 
-func _autofill_teams_randomly():
-	profile_manager.autofill_players_to_teams_randomly()
-
 func _autofill_teams_by_attribute():
 	var variability = skill_slider.value;
 	profile_manager.autofill_players_by_pool_variability(variability)
@@ -90,7 +89,7 @@ func _create_team() -> void:
 func _redraw_teamless_players():
 	for child in teamless_player_list.get_children():
 		child.queue_free()
-	for teamless_player in profile_manager.teamlessPlayers:
+	for teamless_player in profile_manager.teamless_players:
 		_instantiate_player_panel(teamless_player, teamless_player_list)
 
 func _redraw_teams():
@@ -135,8 +134,7 @@ func _redraw_player_lists():
 func _redraw_available_players_dropdown():
 	for child in available_players_list.get_children():
 		available_players_list.remove_child(child);
-	for player in profile_manager.availablePlayers:
-		print("avail ",player.name)
+	for player in profile_manager.available_players:
 		_instantiate_player_panel(player, available_players_list);
 		
 func _redraw_saved_players_dropdown():
@@ -148,7 +146,7 @@ func _redraw_saved_players_dropdown():
 
 func _import_saved_players():
 	profile_manager.import_saved_player_data(import_saved_players_text.text)
-																				 
+
 func _export_saved_players():
 	var export_string = profile_manager.export_saved_player_data();
 	DisplayServer.clipboard_set(export_string);

@@ -577,7 +577,7 @@ layout_mode = 2
 [node name="ImportProfileCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1. Coming Soon"
+text = "1. Select Profile"
 
 [node name="ShowPlayerCanvasButton" type="Button" parent="PlayerCanvasLayer/UIGridContainer/BottomRow"]
 layout_mode = 2

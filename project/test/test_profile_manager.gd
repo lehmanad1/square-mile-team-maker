@@ -9,7 +9,6 @@ func before_each():
 	add_child(profile_manager)
 	await get_tree().process_frame;
 		
-
 func after_each():
 	remove_child(profile_manager);
 	profile_manager.queue_free();
@@ -47,26 +46,6 @@ func test_import_export_player_data():
 	assert_true(exported_data.contains("Player4,5,6,7,8"), "Player4 should be exported");
 	assert_true(exported_data.contains("Player5,6,7,8,9"), "Player5 should be exported");
 
-# Test autofill players to teams randomly
-func test_autofill_players_to_teams_randomly():
-	profile_manager.add_new_team();
-	profile_manager.add_new_team();
-	profile_manager.mark_player_as_available(Player.new("Player6", 7, 8, 9, 10));
-	profile_manager.mark_player_as_available(Player.new("Player7", 8, 9, 10, 11));
-	profile_manager.autofill_players_to_teams_randomly();
-	assert_true(profile_manager._is_player_on_any_team(Player.new("Player6", 7, 8, 9, 10)), "Player6 should be assigned to a team");
-	assert_true(profile_manager._is_player_on_any_team(Player.new("Player7", 8, 9, 10, 11)), "Player7 should be assigned to a team");
-
-# Test autofill players to team by attributes
-func test_autofill_players_to_team_by_attributes():
-	profile_manager.add_new_team();
-	profile_manager.add_new_team();
-	profile_manager.mark_player_as_available(Player.new("Player8", 9, 10, 11, 12));
-	profile_manager.mark_player_as_available(Player.new("Player9", 10, 11, 12, 13));
-	profile_manager.autofill_players_to_team_by_attributes();
-	assert_true(profile_manager._is_player_on_any_team(Player.new("Player8", 9, 10, 11, 12)), "Player8 should be assigned to a team");
-	assert_true(profile_manager._is_player_on_any_team(Player.new("Player9", 10, 11, 12, 13)), "Player9 should be assigned to a team");
-
 # Test autofill players by pool variability
 func test_autofill_players_by_pool_variability():
 	profile_manager.add_new_team();
@@ -76,3 +55,43 @@ func test_autofill_players_by_pool_variability():
 	profile_manager.autofill_players_by_pool_variability(50);
 	assert_true(profile_manager._is_player_on_any_team(Player.new("Player10", 11, 12, 13, 14)), "Player10 should be assigned to a team");
 	assert_true(profile_manager._is_player_on_any_team(Player.new("Player11", 12, 13, 14, 15)), "Player11 should be assigned to a team");
+	
+func test_load_profile():
+	var profile = Profile.new()
+	var attributes: Array[Attribute] = [Attribute.new("Strength", 10), Attribute.new("Agility", 8)]
+	var saved_players: Array[Player] = [Player.new("Player1", 5, 6, 7, 8), Player.new("Player2", 4, 5, 6, 7)]
+	var available_players: Array[Player] = [saved_players[0]]
+	var teams: Array[Team] = [Team.new("Team1", [available_players[0]])];
+	profile.attributes = attributes;
+	profile.saved_players = saved_players;
+	profile.available_players = available_players;
+	profile.teams = teams;
+	profile.max_team_size = 10
+	
+	profile_manager.load_profile(profile)
+
+	assert_eq(profile_manager.attributes.size(), 2)
+	assert_eq(profile_manager.saved_players.size(), 2)
+	assert_eq(profile_manager.available_players.size(), 1)
+	assert_eq(profile_manager.teams.size(), 1)
+	assert_eq(profile_manager.max_team_size, 10)
+
+func test_export_profile():
+	var attributes: Array[Attribute] = [Attribute.new("Strength", 10), Attribute.new("Agility", 8)]
+	var saved_players: Array[Player] = [Player.new("Player1", 5, 6, 7, 8), Player.new("Player2", 4, 5, 6, 7)]
+	var available_players: Array[Player] = [saved_players[0]]
+	var teams: Array[Team] = [Team.new("Team1", [available_players[0]])];
+	
+	profile_manager.attributes_manager.attributes = attributes
+	profile_manager.saved_player_manager.saved_players = saved_players
+	profile_manager.available_player_manager.available_players = available_players
+	profile_manager.team_manager.teams = teams
+	profile_manager.max_team_size = 10
+
+	var profile = profile_manager.export_profile()
+
+	assert_eq(profile.attributes.size(), 2)
+	assert_eq(profile.saved_players.size(), 2)
+	assert_eq(profile.available_players.size(), 1)
+	assert_eq(profile.teams.size(), 1)
+	assert_eq(profile.max_team_size, 10)

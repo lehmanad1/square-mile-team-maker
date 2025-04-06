@@ -5,6 +5,10 @@ signal saved_players_updated;
 
 var saved_players: Array[Player] = [];
 
+func load(loaded_saved_players: Array[Player]):
+	saved_players = loaded_saved_players;
+	saved_players_updated.emit();
+
 func import_saved_player_data(saved_players_string: String):
 	var imported_players = Array(saved_players_string.split("\n")).map(func(x):
 		if x == "":
@@ -41,6 +45,11 @@ func try_add_saved_player(player: Player, is_edit: bool = false, previous_name: 
 	saved_players.append(player);
 	saved_players_updated.emit();
 	return true
+
+
+func removed_saved_player(player: Player) -> void:
+	# need to add functionality
+	pass;
 
 func _is_player_in_list(player:Player, player_list: Array[Player]):
 	return player_list.map(func(x): return x.name).has(player.name)
