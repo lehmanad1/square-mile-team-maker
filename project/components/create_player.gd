@@ -6,12 +6,12 @@ signal close_popup
 @onready var save_button = $VBoxContainer/HBoxContainer6/SavePlayerButton
 @onready var close_button = $VBoxContainer/HBoxContainer6/CloseButton
 @onready var name_edit = $VBoxContainer/HBoxContainer/NameEdit
-@onready var attr1_edit = $VBoxContainer/HBoxContainer2/Attr1Edit
-@onready var attr2_edit = $VBoxContainer/HBoxContainer3/Attr2Edit
-@onready var attr3_edit = $VBoxContainer/HBoxContainer4/Attr3Edit
-@onready var attr4_edit = $VBoxContainer/HBoxContainer5/Attr4Edit
+@onready var attribute_container = $VBoxContainer/ScrollContainer/AttributeSelectionContainer
 @onready var validation_label = $VBoxContainer/ValidationLabel
+#todo: this should be redone using signals
 @onready var profile_manager = $"../../../ProfileManager"
+
+var AttributeValueSelectorScene = preload("res://components/player_attribute_container.tscn");
 
 var editable = false
 var previous_name = ""
@@ -21,6 +21,9 @@ func _ready():
 	close_button.connect("pressed", Callable(self, "_close_button_pressed"));
 	name_edit.connect("gui_input", Callable(self, "_on_text_gui_input"));
 	get_parent().connect("close_requested", Callable(self, "_clear_input"));
+	if not profile_manager:
+		await profile_manager.ready;
+	profile_manager.saved_players_updated.connect(Callable(self, "_create_new_attribute_list"));
 
 func _close_button_pressed() -> void:
 	emit_signal("close_popup")
@@ -31,12 +34,24 @@ func _on_save_player_button_pressed(close:bool = true) -> void:
 		_show_validation_text("Please enter a name for this player")
 		return
 	
+	var attribute_values: Array[AttributeValue] = [];
+	
+	for attribute_value_selector in attribute_container.get_children():
+		var attribute_name = attribute_value_selector.get_node("AttributeLabel").text
+		var attribute_value = attribute_value_selector.get_node("AttributeEdit").value
+		print(profile_manager.attributes[0].attribute_name)
+		var found_attribute_index = profile_manager.attributes.find_custom(func(x): return x.attribute_name == attribute_name);
+		print(found_attribute_index)
+		if found_attribute_index <= -1:
+			printerr("attribute not found");
+			return;
+		
+		var attribute_weight = profile_manager.attributes[found_attribute_index].attribute_weight
+		attribute_values.append(AttributeValue.new(attribute_name, attribute_weight, attribute_value))
+		
 	var player_data = Player.new(
 		name_edit.text,
-		attr1_edit.value,
-		attr2_edit.value,
-		attr3_edit.value,
-		attr4_edit.value
+		attribute_values
 	)
 	if profile_manager.try_add_saved_player(player_data, editable, previous_name):
 		emit_signal("player_saved", player_data)
@@ -62,19 +77,30 @@ func _show_validation_text(text:String, failure:bool = true) -> void:
 func _load_saved_player(player_data: Player):
 	previous_name = player_data.name;
 	name_edit.text = player_data.name;
-	attr1_edit.value = player_data.attr1;
-	attr2_edit.value = player_data.attr2;
-	attr3_edit.value = player_data.attr3;
-	attr4_edit.value = player_data.attr4;
+	_reset_attribute_list(player_data.attributes);
 	editable = true
+
+func _create_new_attribute_list():
+	var attribute_values: Array[AttributeValue] = [];
+	attribute_values.assign(profile_manager.attributes.map(func(x): return AttributeValue.new(x.attribute_name, x.attribute_weight, 1)))
+	_reset_attribute_list(attribute_values);
+
+func _reset_attribute_list(attributes: Array[AttributeValue]):
+	for attribute_item in attribute_container.get_children():
+		attribute_item.queue_free()
+	for attribute in attributes:
+		_instantiate_player_attribute_container(attribute);
+
+func _instantiate_player_attribute_container(attribute: AttributeValue):
+	var attribute_value_selector = AttributeValueSelectorScene.instantiate();
+	attribute_value_selector.get_node("AttributeLabel").text = attribute.attribute_name
+	attribute_value_selector.get_node("AttributeEdit").value = attribute.attribute_value if attribute.attribute_value != null else 0
+	attribute_container.add_child(attribute_value_selector)
 
 func _clear_input() -> void:
 	print("clearing input")
 	_show_validation_text("", false)
 	name_edit.text = ""
-	attr1_edit.value = 0
-	attr2_edit.value = 0
-	attr3_edit.value = 0
-	attr4_edit.value = 0
+	_create_new_attribute_list()
 	editable = false
 	previous_name = ""

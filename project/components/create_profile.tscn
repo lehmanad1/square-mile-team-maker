@@ -1,0 +1,153 @@
+[gd_scene load_steps=2 format=3 uid="uid://chhal618wbehk"]
+
+[ext_resource type="Script" uid="uid://buwpmy4o05veu" path="res://components/create_profile.gd" id="1_7mt82"]
+
+[node name="CreateProfile" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7mt82")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 90
+
+[node name="ProfileEditContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+
+[node name="ProfileLabel" type="Label" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "New Profile"
+horizontal_alignment = 1
+
+[node name="ProfileValidationLabel" type="Label" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Profile Name:"
+
+[node name="ProfileNameEdit" type="LineEdit" parent="MarginContainer/ProfileEditContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Max Team Size: "
+
+[node name="MaxTeamSizeSpinBox" type="SpinBox" parent="MarginContainer/ProfileEditContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+value = 8.0
+
+[node name="Label" type="Label" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+text = "Attributes:"
+
+[node name="AttributeScrollContainer" type="ScrollContainer" parent="MarginContainer/ProfileEditContainer"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="AttributeListContainer" type="VBoxContainer" parent="MarginContainer/ProfileEditContainer/AttributeScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HorizontalSpaceControl3" type="Control" parent="MarginContainer/ProfileEditContainer"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Add/Update Attribute"
+horizontal_alignment = 1
+
+[node name="AttributeValidationLabel" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Attribute Name: "
+
+[node name="AttributeNameEdit" type="LineEdit" parent="MarginContainer/ProfileEditContainer/VBoxContainer3/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+text = "How much should this attribute affect team balance?"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="AttributeWeightSlider" type="HSlider" parent="MarginContainer/ProfileEditContainer/VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="AttributeWeightPercentLabel" type="Label" parent="MarginContainer/ProfileEditContainer/VBoxContainer3/HBoxContainer2"]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="AddOrUpdateAttributeButton" type="Button" parent="MarginContainer/ProfileEditContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Add Attribute"
+
+[node name="HorizontalSpaceControl4" type="Control" parent="MarginContainer/ProfileEditContainer"]
+custom_minimum_size = Vector2(60, 50)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ProfileEditContainer"]
+layout_mode = 2
+
+[node name="SaveProfileButton" type="Button" parent="MarginContainer/ProfileEditContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save Profile"
+
+[node name="ClosePopupButton" type="Button" parent="MarginContainer/ProfileEditContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close
+"

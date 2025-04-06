@@ -9,20 +9,22 @@ func load(loaded_saved_players: Array[Player]):
 	saved_players = loaded_saved_players;
 	saved_players_updated.emit();
 
-func import_saved_player_data(saved_players_string: String):
+func import_saved_player_data(saved_players_string: String, attributes: Array[Attribute]):
 	var imported_players = Array(saved_players_string.split("\n")).map(func(x):
 		if x == "":
 			return null
-		var player_string = x.split(",");
-		if player_string.size() < 5:
-			return Player.new(player_string[0],1,1,1,1);
-		else:
-			return Player.new(player_string[0],
-			clamp(int(player_string[1]), 0, 100),
-			clamp(int(player_string[2]), 0, 100),
-			clamp(int(player_string[3]), 0, 100),
-			clamp(int(player_string[4]), 0, 100)
-		)
+		var player_string: Array = x.split(",");
+		var player_name = player_string.pop_front();
+		
+		var attribute_values: Array[AttributeValue] = [];
+		
+		for attribute in attributes:
+			if player_string.size() == 0:
+				break;
+			var attribute_value = clamp(int(player_string.pop_front()), 0, 100);
+			attribute_values.append(AttributeValue.new(attribute.attribute_name, attribute.attribute_weight, attribute_value));
+			
+		return Player.new(player_name,attribute_values);
 	);
 	saved_players = [];
 	for player in imported_players.filter(func(x): return x != null):

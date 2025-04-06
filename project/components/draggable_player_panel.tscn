@@ -19,33 +19,12 @@ text = "Player Name Here"
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
-[node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
+[node name="AttrTotalLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 0
-columns = 2
-
-[node name="Attr1Label" type="Label" parent="HBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 2
 text = "0"
-horizontal_alignment = 1
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="Attr2Label" type="Label" parent="HBoxContainer/GridContainer"]
+[node name="Control" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "0"
-horizontal_alignment = 1
-
-[node name="Attr3Label" type="Label" parent="HBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "0"
-horizontal_alignment = 1
-
-[node name="Attr4Label" type="Label" parent="HBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "0"
-horizontal_alignment = 1

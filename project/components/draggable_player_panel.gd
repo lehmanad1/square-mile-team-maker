@@ -3,10 +3,7 @@ extends PanelContainer
 var player: Player
 
 @onready var label = $HBoxContainer/PlayerName
-@onready var attr1Label = $HBoxContainer/GridContainer/Attr1Label
-@onready var attr2Label = $HBoxContainer/GridContainer/Attr2Label
-@onready var attr3Label = $HBoxContainer/GridContainer/Attr3Label
-@onready var attr4Label = $HBoxContainer/GridContainer/Attr4Label
+@onready var attr_total_label = $HBoxContainer/AttrTotalLabel
 
 var is_touch_dragging = false
 
@@ -25,10 +22,7 @@ func set_player_name() -> void:
 
 func set_player_attributes() -> void:
 	await ready
-	attr1Label.text = str(player.attr1)
-	attr2Label.text = str(player.attr2)
-	attr3Label.text = str(player.attr3)
-	attr4Label.text = str(player.attr4)
+	attr_total_label.text = str(player.get_attribute_total())
 
 func _can_drop_data(position, data):
 	return true

@@ -7,7 +7,7 @@ var team: Team;
 
 func test_team_init_and_properties() -> void:
 	var team_name = "Team Name";
-	var player = Player.new("Test Player",1,1,1,1);
+	var player = Player.new("Test Player",[]);
 	var team = Team.new(team_name, [player]);
 	
 	assert_eq(team.players[0], player);
@@ -15,10 +15,13 @@ func test_team_init_and_properties() -> void:
 	
 func test_get_attribute_total() -> void: 
 	var team_name = "Team Name";
-	var player_1 = Player.new("Test Player",5,5,5,5);
-	var player_2 = Player.new("Test Player 2", 10,10,10,10);
+	var attribute_value_1:AttributeValue = AttributeValue.new("attr1", 100, 5);
+	var attribute_value_2:AttributeValue = AttributeValue.new("attr2", 100, 5);
+	var attribute_value_3:AttributeValue = AttributeValue.new("attr1", 50, 10);
+	var player_1 = Player.new("Test Player", [attribute_value_1, attribute_value_2, attribute_value_3]);
+	var player_2 = Player.new("Test Player 2", [attribute_value_1, attribute_value_2, attribute_value_3]);
 	
 	var team = Team.new(team_name, [player_1, player_2]);
 	
-	assert_eq(team.get_attribute_total(), 60);
+	assert_eq(team.get_attribute_total(), 30);
 	
