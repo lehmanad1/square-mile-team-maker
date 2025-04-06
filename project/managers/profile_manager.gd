@@ -76,7 +76,6 @@ func set_active_profile(profile:Profile):
 	saved_profiles_manager.set_active_profile(profile);
 
 func load_active_profile():
-	var current_profile = export_profile();
 	load_profile(active_profile);
 
 func load_profile(profile: Profile) -> void:

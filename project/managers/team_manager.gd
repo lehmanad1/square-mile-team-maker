@@ -21,7 +21,6 @@ func remove_player_from_team(target_player: Player):
 	for team in teams:
 		for player in team.players:
 			if player.name == target_player.name:
-				print("removing player: ", player.name);
 				team.players.erase(player);
 				teams_updated.emit();
 				break;
