@@ -1,14 +1,18 @@
 extends Node
 class_name ProfileManager
 
+#region signals
 signal teamless_players_updated
 signal teams_updated
 signal saved_players_updated
+#endregion
 
+#region managers
 @onready var saved_player_manager = $SavedPlayerManager;
 @onready var available_player_manager = $AvailablePlayerManager;
 @onready var team_manager = $TeamManager;
 @onready var attributes_manager = $AttributesManager;
+#endregion
 
 var max_team_size = 8
 

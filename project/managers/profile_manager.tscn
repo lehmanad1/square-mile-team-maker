@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://j54v88xvtgo0"]
 
 [ext_resource type="Script" uid="uid://cxa46504cs0kr" path="res://managers/profile_manager.gd" id="1_4wmm3"]
-[ext_resource type="Script" uid="uid://byypfyfqmolqw" path="res://saved_player_manager.gd" id="2_ouv4w"]
-[ext_resource type="Script" uid="uid://c7uttpvp0cny8" path="res://team_manager.gd" id="3_cx50v"]
+[ext_resource type="Script" uid="uid://byypfyfqmolqw" path="res://managers/saved_player_manager.gd" id="2_ouv4w"]
+[ext_resource type="Script" uid="uid://c7uttpvp0cny8" path="res://managers/team_manager.gd" id="3_cx50v"]
 [ext_resource type="Script" uid="uid://bbr3h0xmtmisx" path="res://managers/available_player_manager.gd" id="3_ouv4w"]
-[ext_resource type="Script" uid="uid://bkur30acldlcr" path="res://attributes_manager.gd" id="4_lcms1"]
+[ext_resource type="Script" uid="uid://bkur30acldlcr" path="res://managers/attributes_manager.gd" id="4_lcms1"]
 
 [node name="ProfileManager" type="Node"]
 script = ExtResource("1_4wmm3")

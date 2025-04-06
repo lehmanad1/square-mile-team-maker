@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dfjxvs54xiwfs"]
+
+[node name="PanelContainer" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttributeName" type="Label" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Attribute Name"
+horizontal_alignment = 1
+text_overrun_behavior = 3
+
+[node name="AttributeWeight" type="Label" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DeleteAttributeButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Delete"

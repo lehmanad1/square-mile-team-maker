@@ -6,7 +6,6 @@ signal team_size_updated
 
 # TeamCanvasLayer Nodes
 @onready var team_canvas_layer = $TeamCanvasLayer
-@onready var create_player_modal = $"TeamCanvasLayer/CreatePlayerPopup/CreatePlayer"
 @onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 @onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
