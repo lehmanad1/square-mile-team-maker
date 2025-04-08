@@ -52,6 +52,10 @@ func test_import_export_player_data():
 
 # Test autofill players by pool variability
 func test_autofill_players_by_pool_variability():
+	var profile = Profile.new();
+	profile.max_team_size = 5;
+	profile_manager.set_active_profile(profile);
+	
 	profile_manager.add_new_team();
 	profile_manager.add_new_team();
 	var player_1 = Player.new("Player1", []);
@@ -62,7 +66,7 @@ func test_autofill_players_by_pool_variability():
 	assert_true(profile_manager._is_player_on_any_team(player_1), "Player1 should be assigned to a team");
 	assert_true(profile_manager._is_player_on_any_team(player_2), "Player2 should be assigned to a team");
 	
-func test_load_profile():
+func test_load_active_profile():
 	var profile = Profile.new()
 	var attributes: Array[Attribute] = [Attribute.new("Strength", 10), Attribute.new("Agility", 8)]
 	var attribute_values:Array[AttributeValue] = [AttributeValue.new("attr1",100,1), AttributeValue.new("attr2",100,10),AttributeValue.new("attr3",100,3),AttributeValue.new("attr4",100,5)];
@@ -76,10 +80,11 @@ func test_load_profile():
 	profile.attributes = attributes;
 	profile.saved_players = saved_players;
 	profile.available_players = available_players;
+	profile.max_team_size = 10;
 	profile.teams = teams;
-	profile.max_team_size = 10
 	
-	profile_manager.load_profile(profile)
+	profile_manager.set_active_profile(profile);
+	profile_manager.load_active_profile();
 
 	assert_eq(profile_manager.attributes.size(), 2)
 	assert_eq(profile_manager.saved_players.size(), 2)
@@ -93,11 +98,13 @@ func test_export_profile():
 	var available_players: Array[Player] = [saved_players[0]]
 	var teams: Array[Team] = [Team.new("Team1", [available_players[0]])];
 	
-	profile_manager.attributes_manager.attributes = attributes
-	profile_manager.saved_player_manager.saved_players = saved_players
-	profile_manager.available_player_manager.available_players = available_players
-	profile_manager.team_manager.teams = teams
-	profile_manager.max_team_size = 10
+	var active_profile = Profile.new();
+	active_profile.max_team_size = 10;
+	active_profile.attributes = attributes;
+	active_profile.saved_players = saved_players;
+	active_profile.available_players = available_players;
+	active_profile.teams = teams;
+	profile_manager.set_active_profile(active_profile);
 
 	var profile = profile_manager.export_profile()
 

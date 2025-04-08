@@ -4,6 +4,9 @@ signal teams_updated;
 
 var teams: Array[Team] = []
 
+func _ready():
+	randomize()
+	
 func load(load_teams: Array[Team]):
 	teams = load_teams;
 	teams_updated.emit();
@@ -29,7 +32,8 @@ func removed_saved_player(player: Player) -> void:
 	# need to add functionality
 	pass;
 
-func autofill_players_by_pool_variability(variability: int, teamless_players: Array[Player]):
+func autofill_players_by_pool_variability(variability: int, teamless_players: Array[Player], max_players_per_team: int):
+	print("variability is ", str(variability))
 	if teams.is_empty():
 		printerr("Autofill failed: No teams available.")
 		return
@@ -81,10 +85,10 @@ func autofill_players_by_pool_variability(variability: int, teamless_players: Ar
 			
 			# Determine if this team is eligible to receive a player
 			var is_team_available = false
-			if current_team_size < base_size_per_team:
+			if current_team_size < base_size_per_team and current_team_size < max_players_per_team:
 				# Team is below the base size, always available
 				is_team_available = true
-			elif current_team_size == base_size_per_team and team_can_take_extra:
+			elif current_team_size == base_size_per_team and team_can_take_extra and current_team_size < max_players_per_team:
 				# Team is at base size, can take one more if quota for extra players isn't met
 				is_team_available = true
 				

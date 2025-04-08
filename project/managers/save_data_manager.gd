@@ -19,10 +19,11 @@ func _save_profiles():
 		save_dict.get_or_add(profile.profile_name, profile.to_json());
 		
 	var save_string = JSON.stringify(save_dict);
+	print("saving...")
 	save_file.store_line(save_string);
 	
 func load_profiles():
-	FileAccess.open(SAVE_LOCATION,FileAccess.WRITE).resize(0);
+	# FileAccess.open(SAVE_LOCATION,FileAccess.WRITE).resize(0);
 	if not FileAccess.file_exists(SAVE_LOCATION):
 		return
 	var file_as_string = FileAccess.get_file_as_string(SAVE_LOCATION);

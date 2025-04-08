@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c42fmw3nsow71"]
+
+[ext_resource type="Script" uid="uid://cn2ckjwkb1cmi" path="res://components/team_member_slot.gd" id="1_n47ra"]
+
+[node name="TeamMemberSlot" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 40)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_n47ra")
