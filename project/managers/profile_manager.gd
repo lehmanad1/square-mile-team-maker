@@ -16,8 +16,6 @@ signal saved_profiles_updated
 @onready var saved_profiles_manager = $SavedProfilesManager;
 #endregion
 
-var max_team_size = 8
-
 #region getters
 var attributes: Array[Attribute] :
 	get:
@@ -46,6 +44,10 @@ var saved_profiles: Array[Profile] :
 var active_profile: Profile :
 	get:
 		return saved_profiles_manager.active_profile;
+
+var max_team_size: int : 
+	get:
+		return saved_profiles_manager.active_profile.max_team_size;
 
 #endregion
 
@@ -83,7 +85,6 @@ func load_profile(profile: Profile) -> void:
 	saved_player_manager.load(profile.saved_players);
 	team_manager.load(profile.teams);
 	available_player_manager.load(profile.available_players, profile.teams);
-	max_team_size = profile.max_team_size;
 	teamless_players_updated.emit();
 	teams_updated.emit();
 	saved_players_updated.emit();
@@ -100,6 +101,9 @@ func export_profile() -> Profile:
 	
 func try_add_saved_profile(profile: Profile) -> bool:
 	return saved_profiles_manager.try_add_profile(profile);
+
+func delete_profile(profile: Profile):
+	saved_profiles_manager.delete_profile(profile);
 
 func _resync_active_profile():
 	saved_profiles_manager.resync_active_profile(export_profile());
@@ -118,7 +122,7 @@ func export_saved_player_data() -> String:
 func try_add_saved_player(player: Player, is_edit: bool = false, previous_name: String = "") -> bool:
 	return saved_player_manager.try_add_saved_player(player, is_edit, previous_name);
 
-func removed_saved_player(player: Player):
+func delete_player(player: Player):
 	saved_player_manager.removed_saved_player(player);
 
 func _emit_saved_players_updated():
@@ -134,7 +138,7 @@ func mark_player_as_unavailable(player: Player) -> void:
 
 func get_unavailable_players() -> Array[Player]:
 	return available_player_manager.get_unavailable_players(saved_players);
-	
+
 func _recheck_teamless_player_list():
 	return available_player_manager.recheck_teamless_player_list(teams);
 	
@@ -150,7 +154,7 @@ func remove_player_from_team(target_player: Player):
 	team_manager.remove_player_from_team(target_player);
 
 func autofill_players_by_pool_variability(variability: int):
-	team_manager.autofill_players_by_pool_variability(variability, teamless_players);
+	team_manager.autofill_players_by_pool_variability(variability, teamless_players, max_team_size);
 
 func add_new_team():
 	team_manager.add_new_team();

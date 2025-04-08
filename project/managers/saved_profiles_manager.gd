@@ -30,3 +30,7 @@ func resync_active_profile(profile:Profile):
 	));
 	saved_profiles_updated.emit();
 	
+func delete_profile(profile: Profile):
+	saved_profiles.erase(profile);
+	saved_profiles_updated.emit();
+	

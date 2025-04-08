@@ -8,18 +8,16 @@ var team: Team = Team.new("", [])
 @onready var team_members_container = $TeamMembers
 
 var PlayerPanelScene = preload("res://components/draggable_player_panel.tscn")
+var TeamMemberSlotScene = preload("res://components/team_member_slot.tscn");
 
 func _ready():
-	for slot_manager in team_members_container.get_children():
-		slot_manager.connect("dragged_player_to_team", Callable(self, "_add_player_to_team"))
-		slot_manager.connect("dragged_player_from_team", Callable(self, "_remove_player_from_team"))
 	_set_text()
 	
-func set_team(new_team: Team):
+func set_team(new_team: Team, max_team_size: int):
 	await ready
 	team = new_team
 	_set_text()
-	_set_team_members()
+	_set_team_members(max_team_size)
 	
 func _set_text():
 	$"TeamName".text = str(team.team_name)
@@ -30,12 +28,20 @@ func _add_player_to_team(team_name:String, player:Player):
 func _remove_player_from_team(player:Player):
 	remove_player_from_team.emit(player)
 	
-func _set_team_members():
-	for i in team.players.size():
-		var new_player_container = PlayerPanelScene.instantiate()
-		new_player_container.set_player(team.players[i])
-		var team_member_slot = team_members_container.get_child(i)
-		for j in team_member_slot.get_child_count():
-			team_member_slot.remove_child(team_member_slot.child(j))
-		team_member_slot.add_child(new_player_container)
-			
+func _set_team_members(max_team_size: int):
+	for slot in team_members_container.get_children():
+		slot.queue_free();
+	for player in team.players:
+		var team_member_slot = TeamMemberSlotScene.instantiate(); 
+		var new_player_container = PlayerPanelScene.instantiate();
+		new_player_container.set_player(player)
+		team_member_slot.add_child(new_player_container);
+		team_member_slot.connect("dragged_player_to_team", Callable(self, "_add_player_to_team"))
+		team_member_slot.connect("dragged_player_from_team", Callable(self, "_remove_player_from_team"))
+		team_members_container.add_child(team_member_slot);
+	if  max_team_size - team.players.size() > 0:
+		for j in max_team_size - team.players.size():
+			var team_member_slot = TeamMemberSlotScene.instantiate(); 
+			team_member_slot.connect("dragged_player_to_team", Callable(self, "_add_player_to_team"))
+			team_member_slot.connect("dragged_player_from_team", Callable(self, "_remove_player_from_team"))
+			team_members_container.add_child(team_member_slot);

@@ -122,12 +122,14 @@ func _redraw_saved_profiles():
 		profile_panel.queue_free();
 	for profile in profile_manager.saved_profiles:
 		var profile_panel = ProfilePanelScene.instantiate();
-		profile_panel.get_node("HBoxContainer/HBoxContainer/PlayerName").text = profile.profile_name;
+		profile_panel.get_node("HBoxContainer/HBoxContainer/ProfileName").text = profile.profile_name;
 		if active_profile_name == profile.profile_name:
-			profile_panel.get_node("HBoxContainer/HBoxContainer/PlayerName").horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			profile_panel.get_node("HBoxContainer/HBoxContainer/ProfileName").horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 			profile_panel.get_node("HBoxContainer/ActiveCheckBox").button_pressed = true
+			profile_panel.get_node("HBoxContainer/DeleteProfileButton").disabled = true
 			_redraw_active_profile_selection(profile);
 		profile_panel.get_node("HBoxContainer/ActiveCheckBox").pressed.connect(Callable(profile_manager, "set_active_profile").bind(profile))
+		profile_panel.get_node("HBoxContainer/DeleteProfileButton").pressed.connect(Callable(profile_manager, "delete_profile").bind(profile))
 		profile_list_container.add_child(profile_panel);
 		
 
@@ -193,7 +195,7 @@ func _redraw_teams():
 
 func _instantiate_team_container(team:Team) -> VBoxContainer:
 	var newTeamScene = TeamScene.instantiate();
-	newTeamScene.set_team(team);
+	newTeamScene.set_team(team, profile_manager.active_profile.max_team_size);
 	return newTeamScene
 
 func _remove_team() ->  void:
@@ -215,6 +217,7 @@ func _instantiate_editable_player_panel(player_data: Player):
 	panel.set_player(player_data)
 	panel.connect("edit_player", Callable(create_player_popup_form, "_load_saved_player"))
 	panel.connect("edit_player", Callable(create_player_popup, "_on_edit_player_button_pressed"))
+	panel.get_node("HBoxContainer/DeletePlayerButton").pressed.connect(Callable(profile_manager, "delete_player").bind(player_data))
 	saved_players_list.add_child(panel)
 
 func _redraw_player_lists():
