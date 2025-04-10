@@ -6,6 +6,7 @@ signal teamless_players_updated
 signal teams_updated
 signal saved_players_updated
 signal saved_profiles_updated
+signal save_requested
 #endregion
 
 #region managers
@@ -92,6 +93,7 @@ func load_profile(profile: Profile) -> void:
 
 func export_profile() -> Profile:
 	var profile = Profile.new();
+	profile.profile_name = active_profile.profile_name;
 	profile.teams = teams;
 	profile.saved_players = saved_players;
 	profile.available_players = available_players;
@@ -110,6 +112,8 @@ func _resync_active_profile():
 
 func _emit_saved_profiles_updated():
 	saved_profiles_updated.emit();
+	save_requested.emit();
+	print("save requested at _emit_saved_profiles_updated");
 #endregion
 
 #region saved_player_manager passthroughs
@@ -126,7 +130,9 @@ func delete_player(player: Player):
 	saved_player_manager.removed_saved_player(player);
 
 func _emit_saved_players_updated():
-	saved_players_updated.emit();	
+	saved_players_updated.emit();
+	save_requested.emit();
+	print("save requested at _emit_saved_players_updated");
 #endregion
 
 #region available_player_manager passthroughs
@@ -140,10 +146,11 @@ func get_unavailable_players() -> Array[Player]:
 	return available_player_manager.get_unavailable_players(saved_players);
 
 func _recheck_teamless_player_list():
-	return available_player_manager.recheck_teamless_player_list(teams);
+	available_player_manager.recheck_teamless_player_list(teams);
 	
 func _emit_teamless_players_updated():
 	teamless_players_updated.emit();
+	_resync_active_profile();
 #endregion
 
 #region teams_manager passthroughs
@@ -154,7 +161,7 @@ func remove_player_from_team(target_player: Player):
 	team_manager.remove_player_from_team(target_player);
 
 func autofill_players_by_pool_variability(variability: int):
-	team_manager.autofill_players_by_pool_variability(variability, teamless_players, max_team_size);
+	team_manager.autofill_players_by_pool_variability(variability, available_players.size(), teamless_players, max_team_size);
 
 func add_new_team():
 	team_manager.add_new_team();
@@ -164,7 +171,7 @@ func reset_teams():
 
 func _emit_teams_update():
 	teams_updated.emit();
-	_recheck_teamless_player_list()
+	_recheck_teamless_player_list();
 	
 func _is_player_in_list(player:Player, player_list: Array[Player]):
 	return player_list.map(func(x): return x.name).has(player.name)

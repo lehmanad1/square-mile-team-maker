@@ -31,7 +31,7 @@ extends Node2D
 @onready var export_players_button = $PlayerCanvasLayer/UIGridContainer/ButtonRow1/ExportToClipboardButton
 @onready var import_saved_players_button = $PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/HBoxContainer/ImportButton
 @onready var import_saved_players_text = $PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/MarginContainer/TextEdit
-@onready var create_player_popup_form = $PlayerCanvasLayer/CreatePlayerPopup/CreatePlayer
+@onready var create_player_popup_form = $PlayerCanvasLayer/CreatePlayerPopup/MarginContainer/CreatePlayer
 @onready var create_player_popup = $PlayerCanvasLayer/CreatePlayerPopup
 #endregion
 
@@ -61,6 +61,7 @@ var TeamScene = preload("res://components/team_container.tscn");
 
 func _ready():
 	await get_tree().process_frame
+	randomize()
 	
 	#region ProfileCanvas Connections
 	profile_manager.connect("saved_profiles_updated", Callable(self, "_redraw_saved_profiles"));

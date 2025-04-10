@@ -1,4 +1,4 @@
-extends PopupPanel
+extends Window
 
 @onready var create_profile_button = $"../UIGridContainer/ButtonRow2/AddNewProfileButton"
 @onready var close_popup_button = $CreateProfile/MarginContainer/ProfileEditContainer/HBoxContainer/ClosePopupButton
@@ -8,9 +8,10 @@ func _ready():
 		await create_profile_button.ready
 	create_profile_button.pressed.connect(Callable(self, "_on_create_profile_button_pressed"));
 	close_popup_button.pressed.connect(Callable(self, "_on_create_profile_popup_closed"));
-
+	close_requested.connect(Callable(self, "_on_create_player_popup_closed"));
+	
 func _on_create_profile_button_pressed() -> void:
-	visible = true
+	show();
 
-func _on_create_profile_popup_closed() -> void:
-	visible = false
+func _on_create_player_popup_closed() -> void:
+	hide();

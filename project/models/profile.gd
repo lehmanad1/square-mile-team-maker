@@ -19,6 +19,8 @@ func to_json() -> String:
 	return JSON.stringify(profile_dict)
 
 func from_json(json_str: String):
+	if json_str.is_empty():
+		return null;
 	var profile_dict = JSON.parse_string(json_str);
 	profile_name = profile_dict["profile_name"];
 	saved_players.assign(profile_dict["saved_players"].map(func(p): return Player.new().from_dict(p)));
