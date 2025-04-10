@@ -42,8 +42,7 @@ extends Node2D
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
 @onready var remove_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/RemoveTeamButton"
 @onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
-@onready var autofill_teams_randomly_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
-@onready var autofill_teams_attribute_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton2"
+@onready var autofill_teams_attribute_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
 @onready var team_show_player_canvas_button = $TeamCanvasLayer/UIGridContainer/BottomRow/ShowPlayerCanvasButton
 @onready var team_show_profile_canvas_button = $TeamCanvasLayer/UIGridContainer/BottomRow/ImportProfileCanvasButton
 @onready var skill_slider = $TeamCanvasLayer/UIGridContainer/SliderRow/SkillSlider
