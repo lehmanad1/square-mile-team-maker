@@ -63,7 +63,10 @@ func _on_save_player_button_pressed(close:bool = true) -> void:
 func _on_text_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		_show_validation_text("", false)
-		
+	
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		DisplayServer.virtual_keyboard_hide();
+	
 func _show_validation_text(text:String, failure:bool = true) -> void:
 	if failure:
 		validation_label.set("theme_override_colors/font_color", Color(255, 0, 0))
@@ -92,6 +95,7 @@ func _instantiate_player_attribute_container(attribute: AttributeValue):
 	var attribute_value_selector = AttributeValueSelectorScene.instantiate();
 	attribute_value_selector.get_node("AttributeLabel").text = attribute.attribute_name
 	attribute_value_selector.get_node("AttributeEdit").value = attribute.attribute_value if attribute.attribute_value != null else 0
+	attribute_value_selector.get_node("AttributeEdit").connect("gui_input", Callable(self, "_on_text_gui_input"));
 	attribute_container.add_child(attribute_value_selector)
 
 func _clear_input() -> void:

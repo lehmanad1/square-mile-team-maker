@@ -28,6 +28,7 @@ func _connect_signals():
 	add_or_update_attribute_button.pressed.connect(Callable(self, "_try_add_attribute"));
 	attribute_weight_slider.value_changed.connect(Callable(self, "_adjust_weight_text"));
 	save_profile_button.pressed.connect(Callable(self, "_try_save_profile"));
+	profile_name_edit.connect("gui_input", Callable(self, "_on_text_gui_input"))
 
 #region profile management
 func _try_save_profile():
@@ -69,6 +70,7 @@ func _redraw_attribute_list():
 	for attribute in attributes_to_add:
 		var attribute_panel = editable_attribute_panel.instantiate();
 		attribute_panel.get_node("HBoxContainer/HBoxContainer/AttributeName").text = attribute.attribute_name;
+		attribute_panel.get_node("HBoxContainer/HBoxContainer/AttributeName").connect("gui_input", Callable(self, "_on_text_gui_input"))
 		attribute_panel.get_node("HBoxContainer/HBoxContainer/AttributeWeight").text = str(attribute.attribute_weight) + "%";
 		
 		attribute_panel.get_node("HBoxContainer/DeleteAttributeButton").pressed.connect(Callable(self, "_remove_attribute").bind(attribute));
@@ -87,4 +89,11 @@ func _remove_attribute(attribute: Attribute):
 	
 func _adjust_weight_text(value:int):
 	attribute_weight_percent_label.text = str(value) + "%"
+
+func _on_text_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		_show_attribute_validation_text("", false)
+	
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		DisplayServer.virtual_keyboard_hide();
 #endregion
