@@ -7,10 +7,7 @@ var SAVE_LOCATION = "user://team-maker-data.json";
 func _ready():
 	if not profile_manager:
 		await profile_manager.ready;
-	profile_manager.saved_profiles_updated.connect(Callable(self,"_save_profiles"));
-	profile_manager.saved_players_updated.connect(Callable(self,"_save_profiles"));
-	profile_manager.teamless_players_updated.connect(Callable(self,"_save_profiles"));
-	profile_manager.teams_updated.connect(Callable(self,"_save_profiles"));
+	profile_manager.save_requested.connect(Callable(self,"_save_profiles"));
 	
 func _save_profiles():
 	var save_dict:Dictionary[String, String] = {};

@@ -8,6 +8,10 @@ func before_each():
 	profile_manager = await ProfileManager.instantiate();
 	add_child(profile_manager)
 	await get_tree().process_frame;
+	var profile = Profile.new();
+	profile.profile_name = "Profile";
+	profile.max_team_size = 5;
+	profile_manager.set_active_profile(profile);
 		
 func after_each():
 	remove_child(profile_manager);
@@ -52,10 +56,6 @@ func test_import_export_player_data():
 
 # Test autofill players by pool variability
 func test_autofill_players_by_pool_variability():
-	var profile = Profile.new();
-	profile.max_team_size = 5;
-	profile_manager.set_active_profile(profile);
-	
 	profile_manager.add_new_team();
 	profile_manager.add_new_team();
 	var player_1 = Player.new("Player1", []);
@@ -77,6 +77,8 @@ func test_load_active_profile():
 	var saved_players: Array[Player] = [player_1, player_2];
 	var available_players: Array[Player] = [saved_players[0]]
 	var teams: Array[Team] = [Team.new("Team1", [available_players[0]])];
+	
+	profile.profile_name = "Profile 2";
 	profile.attributes = attributes;
 	profile.saved_players = saved_players;
 	profile.available_players = available_players;
@@ -99,6 +101,7 @@ func test_export_profile():
 	var teams: Array[Team] = [Team.new("Team1", [available_players[0]])];
 	
 	var active_profile = Profile.new();
+	active_profile.profile_name = "Profile 2";
 	active_profile.max_team_size = 10;
 	active_profile.attributes = attributes;
 	active_profile.saved_players = saved_players;
@@ -108,6 +111,7 @@ func test_export_profile():
 
 	var profile = profile_manager.export_profile()
 
+	assert_eq(profile.profile_name, "Profile 2")
 	assert_eq(profile.attributes.size(), 2)
 	assert_eq(profile.saved_players.size(), 2)
 	assert_eq(profile.available_players.size(), 1)

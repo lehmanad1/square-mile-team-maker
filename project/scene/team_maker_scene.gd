@@ -3,7 +3,7 @@ extends Node2D
 @onready var save_data_manager = $SaveDataManager
 @onready var profile_manager = $ProfileManager
 
-#region ProfileCanvasLayler Nodes
+#region ProfileCanvasLayer Nodes
 @onready var profile_canvas_layer = $ProfileCanvasLayer
 @onready var profile_list_container = $ProfileCanvasLayer/UIGridContainer/MainRow/VBoxContainer/ProfileScrollboxContainer/ProfileListContainer
 @onready var create_profile_form = $ProfileCanvasLayer/EditProfileSettingsPopup/CreateProfile
@@ -31,7 +31,7 @@ extends Node2D
 @onready var export_players_button = $PlayerCanvasLayer/UIGridContainer/ButtonRow1/ExportToClipboardButton
 @onready var import_saved_players_button = $PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/HBoxContainer/ImportButton
 @onready var import_saved_players_text = $PlayerCanvasLayer/ImportSavedPlayersPopup/VBoxContainer/MarginContainer/TextEdit
-@onready var create_player_popup_form = $PlayerCanvasLayer/CreatePlayerPopup/CreatePlayer
+@onready var create_player_popup_form = $PlayerCanvasLayer/CreatePlayerPopup/MarginContainer/CreatePlayer
 @onready var create_player_popup = $PlayerCanvasLayer/CreatePlayerPopup
 #endregion
 
@@ -40,6 +40,7 @@ extends Node2D
 @onready var teamless_player_list = $TeamCanvasLayer/UIGridContainer/MainRow/PlayerListScrollContainer/PlayerList
 @onready var teams_list = $TeamCanvasLayer/UIGridContainer/MainRow/TeamsListScrollContainer/TeamsList
 @onready var create_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/CreateTeamButton"
+@onready var remove_team_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/RemoveTeamButton"
 @onready var reset_teams_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow1/ResetTeamsButton"
 @onready var autofill_teams_randomly_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton"
 @onready var autofill_teams_attribute_button = $"TeamCanvasLayer/UIGridContainer/ButtonRow2/AutofillTeamsButton2"
@@ -61,6 +62,7 @@ var TeamScene = preload("res://components/team_container.tscn");
 
 func _ready():
 	await get_tree().process_frame
+	randomize()
 	
 	#region ProfileCanvas Connections
 	profile_manager.connect("saved_profiles_updated", Callable(self, "_redraw_saved_profiles"));
@@ -85,6 +87,7 @@ func _ready():
 	profile_manager.connect("teams_updated", Callable(self, "_redraw_teams"));
 	profile_manager.connect("teamless_players_updated", Callable(self, "_redraw_teamless_players"));
 	create_team_button.pressed.connect(Callable(self, "_add_new_team"));
+	remove_team_button.pressed.connect(Callable(self, "_remove_team"));
 	reset_teams_button.pressed.connect(Callable(self, "_reset_teams"));
 	autofill_teams_attribute_button.pressed.connect(Callable(self, "_autofill_teams_by_attribute"));
 	teamless_player_list.connect("remove_player_from_team", Callable(self, "_remove_player_from_team"));
@@ -162,6 +165,9 @@ func _export_active_profile_to_clipboard():
 func _add_new_team():
 	profile_manager.add_new_team();
 
+func _remove_team():
+	profile_manager.remove_team();
+
 func _reset_teams():
 	profile_manager.reset_teams();
 
@@ -197,9 +203,6 @@ func _instantiate_team_container(team:Team) -> VBoxContainer:
 	var newTeamScene = TeamScene.instantiate();
 	newTeamScene.set_team(team, profile_manager.active_profile.max_team_size);
 	return newTeamScene
-
-func _remove_team() ->  void:
-	pass;
 	
 func _remove_player_from_team(target_player: Player):
 	profile_manager.remove_player_from_team(target_player);

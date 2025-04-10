@@ -9,7 +9,7 @@ signal close_popup
 @onready var attribute_container = $VBoxContainer/ScrollContainer/AttributeSelectionContainer
 @onready var validation_label = $VBoxContainer/ValidationLabel
 #todo: this should be redone using signals
-@onready var profile_manager = $"../../../ProfileManager"
+@onready var profile_manager = $"%ProfileManager"
 
 var AttributeValueSelectorScene = preload("res://components/player_attribute_container.tscn");
 
@@ -20,7 +20,7 @@ func _ready():
 	save_button.connect("pressed", Callable(self, "_on_save_player_button_pressed"));
 	close_button.connect("pressed", Callable(self, "_close_button_pressed"));
 	name_edit.connect("gui_input", Callable(self, "_on_text_gui_input"));
-	get_parent().connect("close_requested", Callable(self, "_clear_input"));
+	get_parent().get_parent().connect("close_requested", Callable(self, "_clear_input"));
 	if not profile_manager:
 		await profile_manager.ready;
 	profile_manager.saved_players_updated.connect(Callable(self, "_create_new_attribute_list"));

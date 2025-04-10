@@ -32,7 +32,7 @@ func removed_saved_player(player: Player) -> void:
 	# need to add functionality
 	pass;
 
-func autofill_players_by_pool_variability(variability: int, teamless_players: Array[Player], max_players_per_team: int):
+func autofill_players_by_pool_variability(variability: int, total_players:int, teamless_players: Array[Player], max_players_per_team: int):
 	print("variability is ", str(variability))
 	if teams.is_empty():
 		printerr("Autofill failed: No teams available.")
@@ -52,9 +52,9 @@ func autofill_players_by_pool_variability(variability: int, teamless_players: Ar
 		
 	# --- Calculate Target Team Sizes ---
 	# Integer division gives the minimum number of players per team
-	var base_size_per_team = total_players_to_assign / num_teams 
+	var base_size_per_team = total_players / num_teams 
 	# Modulo gives the number of teams that will get one extra player
-	var teams_with_extra_player = total_players_to_assign % num_teams 
+	var teams_with_extra_player = total_players % num_teams 
 	
 	print("Autofill Target: %d players for %d teams. Base size: %d, Teams with +1: %d" % [
 		total_players_to_assign, num_teams, base_size_per_team, teams_with_extra_player
@@ -62,8 +62,8 @@ func autofill_players_by_pool_variability(variability: int, teamless_players: Ar
 
 	# Clear existing players from teams if this function is meant to fully reset teams
 	# Comment this out if you are adding to teams that might already have players
-	for team in teams:
-		team.players.clear() 
+	#for team in teams:
+	#	team.players.clear() 
 
 	# Clamp variability to the 0-100 range
 	var clamped_variability = clamp(variability, 0, 100)
@@ -151,13 +151,20 @@ func autofill_players_by_pool_variability(variability: int, teamless_players: Ar
 func add_new_team():
 	var totalTeamCount = teams.size() + 1
 	var team_name = "Team #" + str(totalTeamCount)
-	if totalTeamCount <= 6:
+	if totalTeamCount <= 100:
 		var new_team = Team.new(team_name, [])
 		teams.append(new_team)
 		teams_updated.emit();
+		
+func remove_team():
+	teams.pop_back();
+	teams_updated.emit();
 
 func reset_teams():
+	var total_teams = teams.size();
 	teams = []
+	for i in total_teams:
+		add_new_team();
 	teams_updated.emit();
 
 func _is_player_in_list(player:Player, player_list: Array[Player]):

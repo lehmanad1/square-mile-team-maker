@@ -1,4 +1,4 @@
-extends PopupPanel
+extends Window
 
 @onready var import_player_list_button = $"../UIGridContainer/ButtonRow1/ImportPlayerListButton"
 @onready var close_popup_button = $VBoxContainer/HBoxContainer/CloseButton
