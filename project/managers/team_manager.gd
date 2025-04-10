@@ -151,13 +151,20 @@ func autofill_players_by_pool_variability(variability: int, total_players:int, t
 func add_new_team():
 	var totalTeamCount = teams.size() + 1
 	var team_name = "Team #" + str(totalTeamCount)
-	if totalTeamCount <= 6:
+	if totalTeamCount <= 100:
 		var new_team = Team.new(team_name, [])
 		teams.append(new_team)
 		teams_updated.emit();
+		
+func remove_team():
+	teams.pop_back();
+	teams_updated.emit();
 
 func reset_teams():
+	var total_teams = teams.size();
 	teams = []
+	for i in total_teams:
+		add_new_team();
 	teams_updated.emit();
 
 func _is_player_in_list(player:Player, player_list: Array[Player]):

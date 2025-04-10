@@ -166,6 +166,9 @@ func autofill_players_by_pool_variability(variability: int):
 func add_new_team():
 	team_manager.add_new_team();
 
+func remove_team():
+	team_manager.remove_team();
+
 func reset_teams():
 	team_manager.reset_teams();
 

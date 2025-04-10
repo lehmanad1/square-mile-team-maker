@@ -18,6 +18,7 @@
 script = ExtResource("1_qc0iw")
 
 [node name="ProfileCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="ImportSavedProfilePopup" type="Window" parent="ProfileCanvasLayer"]
@@ -466,7 +467,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 theme_override_font_sizes/font_size = 24
-text = "Saved Players"
+text = "Unavailable Players"
 horizontal_alignment = 1
 
 [node name="VerticalSpaceControl2" type="Control" parent="PlayerCanvasLayer/UIGridContainer/MainRowLabels"]
@@ -547,7 +548,6 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
 [node name="TeamCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 
 [node name="UIGridContainer" type="VBoxContainer" parent="TeamCanvasLayer"]
@@ -576,11 +576,17 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Add New Team"
 
+[node name="RemoveTeamButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remove Last Team"
+
 [node name="ResetTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Reset Teams"
+text = "Reset Players"
 
 [node name="HorizontalSpaceControl2" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow1"]
 custom_minimum_size = Vector2(30, 50)
@@ -596,14 +602,6 @@ layout_mode = 2
 [node name="HorizontalSpaceControl1" type="Control" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
-
-[node name="AutofillTeamsButton" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
-visible = false
-custom_minimum_size = Vector2(150, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-action_mode = 0
-text = "Autofill Randomly"
 
 [node name="AutofillTeamsButton2" type="Button" parent="TeamCanvasLayer/UIGridContainer/ButtonRow2"]
 custom_minimum_size = Vector2(150, 50)
