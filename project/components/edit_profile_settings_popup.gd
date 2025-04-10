@@ -8,10 +8,10 @@ func _ready():
 		await create_profile_button.ready
 	create_profile_button.pressed.connect(Callable(self, "_on_create_profile_button_pressed"));
 	close_popup_button.pressed.connect(Callable(self, "_on_create_profile_popup_closed"));
-	close_requested.connect(Callable(self, "_on_create_player_popup_closed"));
+	close_requested.connect(Callable(self, "_on_create_profile_popup_closed"));
 	
 func _on_create_profile_button_pressed() -> void:
 	show();
 
-func _on_create_player_popup_closed() -> void:
+func _on_create_profile_popup_closed() -> void:
 	hide();
